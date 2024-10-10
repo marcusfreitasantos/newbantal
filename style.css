@@ -1,0 +1,284 @@
+/*
+Theme Name: Aristeu Pires Theme
+Theme URI: https://oceanwp.org/
+Description: OceanWP WordPress theme. Sample child theme.
+Author: OceanWP
+Author URI: https://oceanwp.org/
+Template: oceanwp
+Version: 1.0
+*/
+
+/* Parent stylesheet should be loaded from functions.php not using @import */
+
+:root {
+  --primary_color: #1a61aa;
+  --primary_color_hover: #1e4e88;
+  --secondary_color: #55baaa;
+  --secondary_color_hover: #248581;
+  --text_color: #333333;
+  --warning_color: #f0903a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f1f1f1 !important;
+}
+
+.site a {
+  color: var(--secondary_color) !important;
+  transition: 0.5s;
+}
+
+a:hover {
+  color: var(--secondary_color_hover) !important;
+}
+
+.page-header {
+  display: none !important;
+}
+
+/*HEADER*/
+
+.site .custom__header_nav_item,
+.site .header__main_menu a {
+  text-decoration: none;
+  font-size: 1.6rem;
+  color: var(--text_color) !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.site .custom__header_nav_item:hover {
+  color: var(--secondary_color_hover) !important;
+}
+
+.site .custom__header_nav_item:hover svg {
+  fill: var(--secondary_color_hover) !important;
+  transition: 0.5s;
+}
+
+.custom__header_nav_item svg {
+  fill: var(--text_color) !important;
+}
+
+.custom__header_nav_item i {
+  font-size: 1.6rem !important;
+}
+
+.custom__header {
+  background-color: white;
+  padding: 16px 0 !important;
+}
+
+.custom__header_container {
+  padding: 0 2rem;
+}
+
+.custom__header i {
+  font-size: 24px;
+}
+
+.header__right_menu {
+  gap: 24px;
+}
+
+.header__left_menu i {
+  font-size: 32px;
+}
+
+.header__logo_wrapper {
+  max-width: 200px !important;
+  margin-right: 40px;
+}
+
+.header__search_form {
+  display: none;
+}
+
+.header__search_form_btn,
+.header__main_menu_btn,
+.header__main_menu_btn_close {
+  cursor: pointer;
+}
+
+.header__main_menu {
+  margin: 0 !important;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 12px;
+  display: none;
+}
+
+.header__main_menu a,
+.header__submenu_title {
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.header__main_menu a:hover {
+  color: var(--primary_color_hover);
+}
+
+.header__main_menu li {
+  list-style: none;
+}
+
+.header__main_menu_btn_close {
+  display: none;
+}
+
+@keyframes show_search_form_animation {
+  from {
+    opacity: 0;
+    width: 0;
+  }
+
+  to {
+    opacity: 1;
+    width: 100%;
+  }
+}
+
+@keyframes show_main_menu_animation {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.show__header_main_menu {
+  display: flex;
+  animation: 1s show_main_menu_animation forwards;
+}
+
+.show__search_form {
+  display: block;
+  animation: 1s show_search_form_animation forwards;
+}
+
+.header__submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header__submenu_item {
+  font-weight: 300;
+  color: var(--third_color);
+  font-size: 2rem !important;
+}
+
+/*HEADER - END*/
+
+/*FOOTER - START*/
+footer {
+  background-color: #c9c8c7;
+}
+
+.footer__column_title {
+  color: var(--text_color);
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1px solid;
+  padding-bottom: 12px;
+}
+
+.footer__items_group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.footer__items_group a {
+  text-decoration: none;
+  color: var(--text_color);
+  font-size: 1.4rem;
+  padding: 6px 0;
+  font-weight: 300;
+}
+
+.footer__items_group p {
+  color: var(--text_color);
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+.footer__bottom_bar {
+  background-color: var(--primary_color);
+  text-align: center;
+  border-top: 1px solid var(--text_color);
+  padding: 12px;
+}
+
+.footer__bottom_bar span {
+  color: var(--text_color);
+  font-size: 1.2rem;
+}
+
+footer .wpforms-container {
+  margin: 0 !important;
+}
+
+.newsletter_input_row {
+  display: flex;
+  align-items: center;
+}
+
+#newsletter_form .newsletter_input {
+  background: none !important;
+  border: 1px solid var(--text_color) !important;
+  border-right: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  height: 45px !important;
+}
+
+#newsletter_form .newsletter_btn {
+  color: var(--text_color) !important;
+  background: none !important;
+  border: 1px solid var(--text_color) !important;
+  height: 45px !important;
+}
+
+.footer__social_links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.footer__social_links a {
+  text-decoration: none;
+  font-size: 3rem;
+  border: none;
+}
+
+/*FOOTER - END*/
+
+@media (max-width: 40rem) {
+  .header__logo_wrapper {
+    width: 150px !important;
+  }
+
+  .header__main_menu {
+    flex-direction: column;
+  }
+
+  .header__submenu {
+    gap: 0;
+  }
+
+  .header__submenu_item {
+    margin-left: 10px;
+  }
+}
