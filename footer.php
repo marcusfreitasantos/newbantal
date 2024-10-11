@@ -11,7 +11,7 @@
 	</div>
 </div>
 
-<?php require_once("components/custom-footer/custom-footer.php"); ?>
+<?php require_once("components/custom-footer.php"); ?>
 
 <?php wp_footer(); ?>
 </body>

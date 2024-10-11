@@ -29,7 +29,7 @@
 
 		<div id="wrap" class="clr">
 			
-			<?php require_once("components/custom-header/custom-header.php"); ?>
+			<?php require_once("components/custom-header.php"); ?>
 
 			<?php do_action( 'ocean_before_main' ); ?>
 
