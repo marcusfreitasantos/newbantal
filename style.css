@@ -302,6 +302,40 @@ footer .wpforms-container {
   font-size: 2rem !important;
 }
 
+.hero__carousel_section {
+  padding: 24px;
+  height: 600px;
+}
+
+.hero__carousel {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+  position: relative;
+}
+
+.hero__content_title {
+  color: white;
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.hero__content_text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.button__link {
+  background-color: white;
+  border-radius: 5px;
+  color: var(--text_color);
+  padding: 12px 24px;
+  font-size: 1.6rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
 @media (max-width: 40rem) {
   .header__logo_wrapper {
     width: 150px !important;
@@ -317,5 +351,23 @@ footer .wpforms-container {
 
   .header__submenu_item {
     margin-left: 10px;
+  }
+
+  .hero__carousel_section {
+    height: 400px;
+    padding: 24px 0;
+  }
+
+  .hero__content_title {
+    font-size: 2rem;
+  }
+
+  .hero__content_text {
+    font-size: 1.4rem;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
   }
 }
