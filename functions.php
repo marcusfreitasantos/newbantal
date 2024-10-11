@@ -29,6 +29,8 @@ include("components/post-card.php");
 include("components/whatsapp-btn.php");
 include("components/post-pagination.php");
 include("components/companies-logo-carousel.php");
+include("components/login-form.php");
+
 
 
 global $emailHeaders;

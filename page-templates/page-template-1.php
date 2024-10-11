@@ -42,8 +42,8 @@
             </div>
 
 
-            <div id="hero__carousel_prev_btn" class="swiper-button-prev"></div>
-            <div id="hero__carousel_next_btn" class="swiper-button-next"></div>
+            <div class="swiper-pagination"></div>
+
         </div>
     </div>
 </section>
@@ -64,10 +64,18 @@
         autoplay: {
             delay: 6000,
         },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            renderBullet: function (index, className) {
+            return '<span class="' + className + '">'  + "</span>";
+            },
+        },
         navigation: {
             nextEl: "#hero__carousel_next_btn",
             prevEl: "#hero__carousel_prev_btn",
         },
     });
+
 </script>
 <?php get_footer(); ?>

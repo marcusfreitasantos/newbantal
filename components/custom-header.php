@@ -1,5 +1,6 @@
 <?php 
 $mainMenu = wp_get_nav_menu_items("main_menu");
+$mobileMenu = wp_get_nav_menu_items("mobile_menu");
 $siteUrl = site_url();
 $childThemeDirectory = get_stylesheet_directory_uri();
 $logo = "$childThemeDirectory/assets/img/bantal-recrutamento.svg";
@@ -68,7 +69,7 @@ function defineNavItemIconName($navItem){
                         <?php get_search_form(); ?>
                     </div>
 
-                    <a class="header__search_form_btn" >
+                    <a class="header__search_form_btn" onclick="callSearchForm()" >
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </a>
 
@@ -76,24 +77,27 @@ function defineNavItemIconName($navItem){
                         <i class="fa-regular fa-bell"></i>
                     </a>
 
-                    <a href="">
+                    <a class="header__login_form_btn">
                         <i class="fa-regular fa-user"></i>
                     </a>
                 </div>
+
+
+                <?= LoginForm(); ?>
             </div>
         </div>
 
         <div class="header__main_menu">
-                <?php foreach($mainMenu as $menuItem){                     
-                    if(!hasChildren($mainMenu, $menuItem->ID) && $menuItem->menu_item_parent == 0){ ?>
+                <?php foreach($mobileMenu as $menuItem){                     
+                    if(!hasChildren($mobileMenu, $menuItem->ID) && $menuItem->menu_item_parent == 0){ ?>
                         <a href=<?php echo $menuItem->url; ?>>
                             <?php echo $menuItem->title; ?>
                         </a>
-                    <?php }else if(hasChildren($mainMenu, $menuItem->ID)){ ?>
+                    <?php }else if(hasChildren($mobileMenu, $menuItem->ID)){ ?>
                         <div class="header__submenu">
                             <span class="header__submenu_title"><?php echo $menuItem->title; ?></span>
 
-                            <?php foreach($mainMenu as $submenuItem){ 
+                            <?php foreach($mobileMenu as $submenuItem){ 
                                 if($submenuItem->menu_item_parent == $menuItem->ID){ ?>
                                     <a href="<?php echo $submenuItem->url; ?>" class="header__submenu_item">
                                         <?php echo $submenuItem->title; ?> 
