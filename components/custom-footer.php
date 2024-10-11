@@ -33,17 +33,17 @@
 				
 				<div class="footer__items_group">
 					<a href="mailto:contato@aristeupires.com.br">contato@bantal.com.br</a>
-					<a href="tel:+550543278 1762">(54) 3278 1762</a>
-					<a href="https://maps.app.goo.gl/FfT4rwDhLLPLTPhR8" target="_blank">Rua Perimetral, 394 Distrito Industrial.<br/> Canela/RS</a>
 
-					
 					<div class="footer__social_links">
-						<a href="https://www.facebook.com/aristeupiresdesign" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-						<a href="https://www.instagram.com/aristeupiresdesign/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-						<a href="https://www.linkedin.com/in/aristeu-pires-a9888535/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+						<a href="https://www.facebook.com/bantalcv/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+						<a href="https://www.instagram.com/bantal_cv/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+						<a href="https://www.linkedin.com/in/bantal-cv" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="text-center text-white pt-3 mt-3" style="border-top: 1px solid #eee; font-size: 1.2rem;">
+		<span>@Bantal <?= date('Y'); ?>. Todos os direitos reservados.</span>
 	</div>
 </footer>

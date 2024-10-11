@@ -1,9 +1,10 @@
 <?php 
+global $darkMode;
 $mainMenu = wp_get_nav_menu_items("main_menu");
 $mobileMenu = wp_get_nav_menu_items("mobile_menu");
 $siteUrl = site_url();
 $childThemeDirectory = get_stylesheet_directory_uri();
-$logo = "$childThemeDirectory/assets/img/bantal-recrutamento.svg";
+$logo = $darkMode ? "$childThemeDirectory/assets/img/bantal-recrutamento-white.svg" : "$childThemeDirectory/assets/img/bantal-recrutamento.svg";
 $headerIconSize = "24px";
 
 

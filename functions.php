@@ -1,10 +1,20 @@
 <?php
+global $darkMode, $emailHeaders;
+$darkMode = true;
+
+$emailHeaders = array(
+	'Content-Type: text/html; charset=UTF-8',
+	'Reply-To: Blessy <contato@aristeupires.com.br>',
+);
+
 function oceanwp_child_enqueue_parent_style() {
 
 	$theme   = wp_get_theme( 'OceanWP' );
 	$version = $theme->get( 'Version' );
+	global $darkMode;
+	$cssChildFilePath = $darkMode ? '/style-darkmode.css' : '/style.css';
 
-	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( 'oceanwp-style' ), $version );
+	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . $cssChildFilePath, array( 'oceanwp-style' ), $version );
 	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/libs/bootstrap/css/bootstrap.min.css',array(), $version );
 	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/libs/fontawesome/css/fontawesome.css',array(), $version );
 	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/libs/fontawesome/css/regular.css',array(), $version );
@@ -30,14 +40,6 @@ include("components/whatsapp-btn.php");
 include("components/post-pagination.php");
 include("components/companies-logo-carousel.php");
 include("components/login-form.php");
-
-
-
-global $emailHeaders;
-$emailHeaders = array(
-	'Content-Type: text/html; charset=UTF-8',
-	'Reply-To: Blessy <contato@aristeupires.com.br>',
-);
 
 
 function getAllPostCategories(){

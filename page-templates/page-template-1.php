@@ -5,15 +5,14 @@
 
 <section class="free__warning_section">
     <div class="row align-items-center">
-        <div class="col-md-6">
+        <div class="col-md-10 mb-3">
             <h2 class="free__warning_title">Você está na Bantal gratuita</h2>
             <p class="free__warning_text">Assine o Bantal Premium e mergulhe em um universo de possiblidades!</p>
         </div>
 
-        <div class="col-md-6 d-flex justify-content-end">
-            <div class="d-block">
-
-                <?= ButtonLink("#", "Assine já") ?>
+        <div class="col-md-2 d-flex justify-content-end">
+            <div class="d-block w-100">
+                <?= ButtonLink("#", "Assine já", "attention") ?>
             </div>
         </div>
     </div>  
@@ -40,8 +39,8 @@
                                     <?php } ?>
 
                                     <?php  if($heroBanner['link']){ ?>
-                                        <div class="mt-5 d-flex">
-                                            <?php echo ButtonLink($heroBanner['link']['url'], $heroBanner['link']['title'], $heroBanner['link']['target']); ?>
+                                        <div class="button__link_wrapper mt-5">
+                                            <?php echo ButtonLink($heroBanner['link']['url'], $heroBanner['link']['title'], "primary", $heroBanner['link']['target']); ?>
                                         </div>
                                     <?php } ?>
 
