@@ -1,14 +1,24 @@
 <?php function CompaniesLogoCarousel(){
     ob_start();
-    $childThemeDirectory = get_stylesheet_directory_uri();
+    $siteUrl = site_url();
+
+    $companiesList = getAllCompaniesFromDatabase(15);
+
     ?>
 
         <div class="clients__wrapper position-relative">
             <div id="clients__carousel">
                 <div class="swiper-wrapper">
-                    <a class="clients__card swiper-slide" href="" target="_blank">
-                        <img src="<?= $childThemeDirectory; ?>/assets/img/favicon.png" />
-                    </a>
+
+                <?php foreach($companiesList as $company){
+                    if($company->company_logo){ ?>
+
+                        <a class="clients__card swiper-slide" href=<?= "$siteUrl/empresa/$company->company_id"; ?> target="_blank">
+                            <img src="data:image/png; base64, <?= $company->company_logo; ?>" />
+                        </a>
+
+                    <?php }
+                } ?>
                 </div>
     
                 <div class="swiper-button-prev"></div>

@@ -88,10 +88,10 @@ add_action("getCompaniesFromApiHook", "getCompaniesFromApi");
 function saveCompaniesFromApiToDatabase($company){
 	global $wpdb;
 
-	$table_name = $wpdb->prefix . 'bantal_clients';
+	$tableName = $wpdb->prefix . 'bantal_clients';
 
 	$existingCompany = $wpdb->get_var($wpdb->prepare(
-        "SELECT COUNT(*) FROM $table_name WHERE company_id = %d", $company->userId
+        "SELECT COUNT(*) FROM $tableName WHERE company_id = %d", $company->userId
     ));
 
 	if($existingCompany){
@@ -108,7 +108,7 @@ function saveCompaniesFromApiToDatabase($company){
 
 		$dataToUpdateFormat = array('%s', '%s');
 		
-		$wpdb->update($table_name, $dataToUpdate, $where, $dataToUpdateFormat, $whereFormat);
+		$wpdb->update($tableName, $dataToUpdate, $where, $dataToUpdateFormat, $whereFormat);
 
 	}else{
 		$data = array(
@@ -119,7 +119,7 @@ function saveCompaniesFromApiToDatabase($company){
 
 		$format = array('%d', '%s', '%s');
 
-		$wpdb->insert($table_name, $data, $format);
+		$wpdb->insert($tableName, $data, $format);
 
 		$insert_id = $wpdb->insert_id;
 	
@@ -128,6 +128,22 @@ function saveCompaniesFromApiToDatabase($company){
 			generateLogFiles("/bantal-api-logs/database-operations/insert-data-log.txt", "Failed to insert data for $company->displayName. $currentDate. \n");
 		} 
 	}
+}
+
+function getAllCompaniesFromDatabase($limit) {
+    global $wpdb;
+
+    $tableName = $wpdb->prefix . 'bantal_clients';
+
+    $query = $wpdb->prepare("SELECT * FROM $tableName LIMIT %d", $limit);
+
+    $companies = $wpdb->get_results($query);
+
+    if ($companies) {
+        return $companies;
+    } else {
+        return "No companies found.";
+    }
 }
 
 
