@@ -3,7 +3,21 @@
 <?php get_header(); ?>
 <?php $hero = get_field("banner"); ?>
 
+<section class="free__warning_section">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h2 class="free__warning_title">Você está na Bantal gratuita</h2>
+            <p class="free__warning_text">Assine o Bantal Premium e mergulhe em um universo de possiblidades!</p>
+        </div>
 
+        <div class="col-md-6 d-flex justify-content-end">
+            <div class="d-block">
+
+                <?= ButtonLink("#", "Assine já") ?>
+            </div>
+        </div>
+    </div>  
+</section>
 
 <section class="hero__carousel_section">
     <div class="container h-100">
@@ -13,7 +27,7 @@
                 <?php foreach($hero as $heroBanner){ ?>
     
                     <div class="swiper-slide">
-                        <div class="row p-5  h-100" style="background: url('<?= $heroBanner['background_image']; ?>')">
+                        <div class="row p-5  h-100" style="background: url('<?= $heroBanner['background_image']; ?>'); border-radius: 15px; overflow: hidden;">
                             <div class="col-md-4 d-flex flex-column justify-content-end">
                                 <div class="hero__content">
 
@@ -50,7 +64,7 @@
     </div>
 </section>
 
-<section class="py-5">
+<section class="py-5 mt-5">
     <div class="container">
         <h2 class="section__title">Empresas que estão anunciando na Bantal</h2>
         <div class="row">
@@ -63,7 +77,9 @@
     const heroCarousel = new Swiper(".hero__carousel", {
         direction: "horizontal",
         loop: true,
-        slidesPerView: 1,
+        slidesPerView: 1.1,
+        spaceBetween: 30,
+        initialSlide: 1,
         autoplay: {
             delay: 6000,
         },

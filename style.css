@@ -312,14 +312,11 @@ footer .wpforms-container {
 
 /*HERO - START*/
 .hero__carousel_section {
-  padding: 24px;
   height: 600px;
 }
 
 .hero__carousel {
   height: 100%;
-  overflow: hidden;
-  border-radius: 15px;
   position: relative;
 }
 
@@ -337,7 +334,7 @@ footer .wpforms-container {
 
 .button__link {
   background-color: white;
-  border-radius: 5px;
+  border-radius: 50px;
   color: var(--text_color);
   padding: 12px 24px;
   font-size: 1.6rem;
@@ -400,6 +397,20 @@ footer .wpforms-container {
   font-weight: 600;
   color: var(--text_color);
   margin-bottom: 20px;
+}
+
+.free__warning_section {
+  padding: 2rem;
+}
+
+.free__warning_title {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.free__warning_text {
+  font-weight: 400;
+  font-size: 1.4rem;
 }
 
 @media (max-width: 40rem) {
