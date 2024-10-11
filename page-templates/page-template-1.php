@@ -3,6 +3,8 @@
 <?php get_header(); ?>
 <?php $hero = get_field("banner"); ?>
 
+
+
 <section class="hero__carousel_section">
     <div class="container h-100">
         <div class="hero__carousel">
@@ -50,6 +52,7 @@
 
 <section class="py-5">
     <div class="container">
+        <h2 class="section__title">Empresas que estão anunciando na Bantal</h2>
         <div class="row">
             <?php echo CompaniesLogoCarousel(); ?>
         </div>
