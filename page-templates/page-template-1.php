@@ -1,7 +1,12 @@
 <?php /* Template Name: Page Template 1 */ ?>
 
 <?php get_header(); ?>
-<?php $hero = get_field("banner"); ?>
+
+<?php 
+$hero = get_field("banner");
+$benefits = get_field("benefits_section"); 
+
+?>
 
 <section class="free__warning_section">
     <div class="row align-items-center">
@@ -40,7 +45,7 @@
 
                                     <?php  if($heroBanner['link']){ ?>
                                         <div class="button__link_wrapper mt-5">
-                                            <?php echo ButtonLink($heroBanner['link']['url'], $heroBanner['link']['title'], "primary", $heroBanner['link']['target']); ?>
+                                            <?= ButtonLink($heroBanner['link']['url'], $heroBanner['link']['title'], "primary", $heroBanner['link']['target']); ?>
                                         </div>
                                     <?php } ?>
 
@@ -63,14 +68,42 @@
     </div>
 </section>
 
-<section class="py-5 mt-5">
-    <div class="container">
-        <h2 class="section__title">Empresas que estão anunciando na Bantal</h2>
-        <div class="row">
-            <?php echo CompaniesLogoCarousel(); ?>
+<?= CompaniesLogoCarousel(); ?>
+
+<?php if($benefits){ ?>
+    <section class="benefits__section">
+        <div class="container">
+
+        <?php if($benefits["section_title"]){ ?>
+            <h2 class="section__title">
+                <?= $benefits["section_title"]; ?>
+            </h2>
+        <?php } ?>
+
+        <?php if($benefits["benefits_list"]){ ?>
+            <div class="row">
+                <?php $benefitsCount = 0 ?>
+                <?php foreach($benefits["benefits_list"] as $benefit){ ?>
+                    <?php $benefitsCount++ ?>
+                    <div class="col-md-3 mb-3">
+                        <div class="benefits__card">
+                            <span class="benefits__card_icon"><?= $benefitsCount; ?></span>
+
+                            <?php if($benefit["title"]){ ?>
+                                <h3 class="benefits__card_title"><?= $benefit["title"]; ?></h3>
+                            <?php } ?>
+
+                            <?php if($benefit["description"]){ ?>
+                                <p class="benefits__card_text"><?= $benefit["description"]; ?></p>
+                            <?php } ?>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php } ?>
         </div>
-    </div>
-</section>
+    </section>
+<?php } ?>
 
 <script>
     const heroCarousel = new Swiper(".hero__carousel", {

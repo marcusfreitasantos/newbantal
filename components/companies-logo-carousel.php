@@ -4,26 +4,34 @@
     $companiesList = getAllCompaniesFromDatabase(15);
 
     ?>
-
-        <div class="clients__wrapper position-relative">
-            <div id="clients__carousel">
-                <div class="swiper-wrapper">
-
-                    <?php foreach($companiesList as $company){
-                        if($company->company_logo){ ?>
-
-                            <a class="clients__card swiper-slide" href=<?= "$siteUrl/empresa/$company->company_id"; ?> target="_blank">
-                                <img src="data:image/png; base64, <?= $company->company_logo; ?>" />
-                            </a>
-
-                        <?php }
-                    } ?>
+    <section class="py-5 mt-5">
+        <div class="container">
+            <h2 class="section__title">Empresas que estão anunciando na Bantal</h2>
+            <div class="row">
+                <div class="clients__wrapper position-relative">
+                    <div id="clients__carousel">
+                        <div class="swiper-wrapper">
+            
+                            <?php foreach($companiesList as $company){
+                                if($company->company_logo){ ?>
+            
+                                    <a class="clients__card swiper-slide" href=<?= "$siteUrl/empresa/$company->company_id"; ?> target="_blank">
+                                        <img src="data:image/png; base64, <?= $company->company_logo; ?>" />
+                                    </a>
+            
+                                <?php }
+                            } ?>
+                        </div>
+            
+                        <div id="clients__carousel_prev_btn" class="swiper-button-prev"></div>
+                        <div id="clients__carousel_next_btn" class="swiper-button-next"></div>
+                    </div>
                 </div>
-    
-                <div id="clients__carousel_prev_btn" class="swiper-button-prev"></div>
-                <div id="clients__carousel_next_btn" class="swiper-button-next"></div>
             </div>
         </div>
+
+    </section>
+
     
         <script>
             const clientsCarousel = new Swiper("#clients__carousel", {

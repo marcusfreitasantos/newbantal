@@ -104,6 +104,7 @@ a:hover {
 .header__main_menu_btn,
 .header__main_menu_btn_close {
   cursor: pointer;
+  color: var(--secondary_color);
 }
 
 .header__main_menu {
@@ -421,6 +422,48 @@ footer .wpforms-container {
 .free__warning_text {
   font-weight: 400;
   font-size: 1.4rem;
+  color: var(--text_color);
+}
+
+.benefits__section {
+  padding: 100px 0;
+}
+
+.benefits__card {
+  padding: 48px 24px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 2px solid var(--text_color);
+  height: 100%;
+}
+
+.benefits__card_icon {
+  color: var(--secondary_color);
+  font-size: 6rem;
+  font-weight: bold;
+  border: 2px solid;
+  padding: 20px;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  margin-bottom: 24px;
+}
+
+.benefits__card_title {
+  color: var(--text_color);
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.benefits__card_text {
+  font-size: 1.6rem;
+  line-height: 2.5rem;
   color: var(--text_color);
 }
 
