@@ -6,7 +6,7 @@
     
 
     ?>
-    <section class="py-5 mt-5">
+    <section class="clients__carousel_section">
         <div class="container">
             <h2 class="section__title">Empresas que estão anunciando na Bantal</h2>
             <div class="row">

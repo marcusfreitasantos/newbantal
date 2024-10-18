@@ -48,8 +48,6 @@ $benefits = get_field("benefits_section");
                                             <?= ButtonLink($heroBanner['link']['url'], $heroBanner['link']['title'], "primary", $heroBanner['link']['target']); ?>
                                         </div>
                                     <?php } ?>
-
-        
                                 </div>
                             </div>
         
@@ -60,7 +58,6 @@ $benefits = get_field("benefits_section");
                     
                 <?php } ?>
             </div>
-
 
             <div class="swiper-pagination"></div>
 

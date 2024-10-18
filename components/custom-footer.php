@@ -1,6 +1,7 @@
 <?php $siteUrl = site_url(); ?>
 <?php $footerMenu = wp_get_nav_menu_items("footer_menu"); ?>
 
+<?php echo BottomCTA(); ?>
 
 <footer class="py-5">
 	<div class="container">
@@ -22,11 +23,9 @@
 						<a href=<?php echo $menuItem->url; ?>>
 							<?php echo $menuItem->title; ?>
 						</a>
-				<?php } ?>
+					<?php } ?>
 				</div>
 			</div>
-			
-
 
             <div class="col-md-4 mt-5">
 				<h5 class="footer__column_title">Encontre-nos</h5>
