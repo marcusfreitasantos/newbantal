@@ -8,7 +8,7 @@
                 <p class="login__form_content_text">Entre com sua conta e conheça os melhores planos para você.</p>
 
                 <div class="d-flex w-100">
-                    <?= ButtonLink("#", "Entrar"); ?>
+                    <?= ButtonLink("https://recrutamento.bantal.com.br/recrutamento", "Entrar"); ?>
                 </div>
 
                 <div class="login__form_content_divisor">
@@ -20,7 +20,7 @@
                 <p class="login__form_content_title">Ainda não tem cadastro?</p>
                 
                 <div class="d-flex w-100">
-                    <?= ButtonLink("#", "Cadastrar"); ?>
+                    <?= ButtonLink("https://recrutamento.bantal.com.br/cadastro", "Cadastrar"); ?>
                 </div>
             </div>            
         </div>
