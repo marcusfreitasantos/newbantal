@@ -17,7 +17,7 @@ $benefits = get_field("benefits_section");
         </div>
 
         <div class="col-md-2 d-flex justify-content-end">
-            <div class="d-block w-100">
+            <div class="d-block w-100 btn__bantal_sign_now">
                 <?= ButtonLink("$siteUrl/planos", "Assine já", "attention") ?>
             </div>
         </div>

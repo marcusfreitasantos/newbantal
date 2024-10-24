@@ -336,10 +336,13 @@ footer .wpforms-container {
   border-radius: 50px;
   color: white !important;
   padding: 12px 24px;
-  font-size: 1.6rem;
+  font-size: 2rem;
   text-decoration: none;
   font-weight: 600;
   width: 100%;
+  text-align: center;
+  display: block;
+  animation: pulse_btn_effect 2s ease-in-out infinite;
 }
 
 .button__link_wrapper {
@@ -502,6 +505,18 @@ footer .wpforms-container {
   fill: var(--warning_color) !important;
 }
 /*BANTAL NOW BTN END*/
+
+@keyframes pulse_btn_effect {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.95);
+  }
+}
 
 @media (max-width: 40rem) {
   .header__logo_wrapper {
