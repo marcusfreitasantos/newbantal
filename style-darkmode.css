@@ -17,6 +17,7 @@ Version: 1.0
   --secondary_color: #55baaa;
   --secondary_color_hover: #248581;
   --text_color: #f1f1f1;
+  --text_color_invert: #333;
   --warning_color: #f0903a;
 }
 
@@ -339,6 +340,12 @@ footer .wpforms-container {
   display: block;
 }
 
+.button__link.disabled {
+  background-color: #eee;
+  color: var(--text_color_invert) !important;
+  pointer-events: none;
+}
+
 .site .button__link_attention {
   background-color: var(--warning_color);
   border-radius: 50px;
@@ -527,6 +534,74 @@ footer .wpforms-container {
     transform: scale(0.95);
   }
 }
+
+.bantal__plans_title_wrapper {
+  width: 50% !important;
+  margin: auto;
+}
+
+.bantal__plans_title {
+  font-size: 10rem;
+  color: white;
+  font-weight: bold;
+}
+
+.bantal__plans_subtitle {
+  font-size: 2.4rem;
+  color: white;
+  font-weight: 300;
+}
+
+.bantal__plans_section_cards {
+  background: #f1f1f1;
+  padding: 100px 0;
+}
+
+/*BANTAL PLAN CARDS START*/
+.bantal__plans_card {
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.bantal__plans_card img {
+  width: 100%;
+  max-width: 150px;
+}
+
+.bantal__plans_price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--secondary_color);
+}
+
+.bantal__plans_period {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text_color_invert);
+}
+
+.bantal__plans_card_details_btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  padding-top: 10px;
+  margin-top: 20px;
+}
+
+.bantal__plans_card_details_btn i {
+  color: var(--warning_color);
+}
+/*BANTAL PLAN CARDS END*/
 
 @media (max-width: 40rem) {
   .header__logo_wrapper {
