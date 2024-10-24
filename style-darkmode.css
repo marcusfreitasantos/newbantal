@@ -331,7 +331,7 @@ footer .wpforms-container {
   background-color: white;
   border-radius: 50px;
   color: var(--text_color);
-  padding: 12px 24px;
+  padding: 8px 24px;
   font-size: 1.6rem;
   text-decoration: none;
   font-weight: 600;
@@ -350,7 +350,7 @@ footer .wpforms-container {
   background-color: var(--warning_color);
   border-radius: 50px;
   color: var(--text_color) !important;
-  padding: 12px 24px;
+  padding: 8px 24px;
   font-size: 1.6rem;
   text-decoration: none;
   font-weight: 600;
@@ -557,10 +557,13 @@ footer .wpforms-container {
 
 .bantal__plans_section_cards {
   background: #f1f1f1;
-  padding: 100px 0;
 }
 
 /*BANTAL PLAN CARDS START*/
+.bantal__plans_cards_container {
+  width: 95%;
+  padding: 20px;
+}
 .bantal__plans_card {
   padding: 20px;
   background-color: white;
@@ -570,6 +573,7 @@ footer .wpforms-container {
   align-items: center;
   justify-content: space-between;
   gap: 6px;
+  min-height: 300px;
 }
 
 .bantal__plans_card img {
@@ -594,15 +598,56 @@ footer .wpforms-container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   border-top: 1px solid #ccc;
   width: 100%;
   padding-top: 10px;
   margin-top: 20px;
+  cursor: pointer;
+}
+
+.bantal__plans_card_resources {
+  display: none;
+  padding: 24px 0;
 }
 
 .bantal__plans_card_details_btn i {
   color: var(--warning_color);
+}
+
+.bantal__plans_card_resources_title {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: var(--text_color_invert);
+}
+
+.bantal__plans_card_resource_item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text_color_invert);
+  font-size: 1.2rem;
+}
+
+.bantal__plans_card_resource_item i {
+  color: var(--secondary_color);
+}
+
+.show-resources {
+  display: block;
+  animation: expand_resources 1s forwards;
+}
+
+@keyframes expand_resources {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+
+  to {
+    opacity: 1;
+    height: 100%;
+  }
 }
 /*BANTAL PLAN CARDS END*/
 

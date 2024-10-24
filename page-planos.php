@@ -3,6 +3,18 @@
 $bannerBg = get_field("banner_background");
 ?>
 
+<?php
+    $args = array(
+		'posts_per_page'      => -1,
+		'orderby'          => 'date',
+		'order'            => 'DESC',
+		'post_type'        => 'plano',
+        'status'           => 'publish'
+	);	
+    
+    $getCurrentPlans = new WP_Query($args);
+?>
+
 <style>
     .bantal__plans_section{
         padding: 200px 0;
@@ -25,33 +37,41 @@ $bannerBg = get_field("banner_background");
     </div>
 </section>
 
-<section class="bantal__plans_section_cards">
-    <div class="container">
+<section class="bantal__plans_section_cards py-5">
+    <div class="bantal__plans_cards_container">
         <div class="row">
-            <div class="col-md-2">
-                <?= BantalPlanCard(); ?>
-            </div>
-
-            <div class="col-md-2">
-                <?= BantalPlanCard(); ?>
-            </div>
-
-            <div class="col-md-2">
-                <?= BantalPlanCard(); ?>
-            </div>
-
-            <div class="col-md-2">
-                <?= BantalPlanCard(); ?>
-            </div>
-
-            <div class="col-md-2">
-                <?= BantalPlanCard(); ?>
-            </div>
-
-            <div class="col-md-2">
-                <?= BantalPlanCard(); ?>
-            </div>    
+            <?php if($getCurrentPlans->have_posts()){
+                while($getCurrentPlans->have_posts()):
+                    $getCurrentPlans->the_post();
+                    global $post;
+                    ?>
+                    <div class="col-md-2 mb-3">
+                        <?= BantalPlanCard($post); ?>
+                    </div> 
+                <?php endwhile; ?>
+            <?php } ?>
         </div>
     </div>
 </section>
+
+<script>
+    const moreDetailsBtn = [...document.querySelectorAll(".more__details")];
+    const lessDetails = [...document.querySelectorAll(".less__details")];
+    const planResources = [...document.querySelectorAll(".bantal__plans_card_resources")];
+    
+    moreDetailsBtn.map((openBtn, index) => {
+        openBtn.addEventListener("click", (e) => {
+            openBtn.style.display = "none";
+            planResources[index].classList.add("show-resources")
+        })
+    })
+
+
+    lessDetails.map((closeBtn, index) => {
+        closeBtn.addEventListener("click", (e) => {
+            moreDetailsBtn[index].style.display = "flex";
+            planResources[index].classList.remove("show-resources")
+        })
+    })
+</script>
 <?php get_footer();?>
