@@ -417,6 +417,92 @@ footer .wpforms-container {
   font-size: 1.4rem;
 }
 
+.benefits__section {
+  padding-bottom: 100px;
+}
+
+.benefits__card {
+  padding: 48px 24px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 2px solid var(--text_color);
+  height: 100%;
+}
+
+.benefits__card_icon {
+  color: var(--secondary_color);
+  font-size: 6rem;
+  font-weight: bold;
+  border: 2px solid;
+  padding: 20px;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  margin-bottom: 24px;
+}
+
+.benefits__card_title {
+  color: var(--text_color);
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.benefits__card_text {
+  font-size: 1.6rem;
+  line-height: 2.5rem;
+  color: var(--text_color);
+}
+
+.bottom__cta_section {
+  padding: 200px 0;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+}
+
+.bottom__cta_title {
+  font-size: 7rem;
+  font-weight: 400;
+  color: var(--secondary_color);
+}
+
+.bottom__cta_text {
+  font-size: 3rem;
+  color: var(--text_color);
+  font-weight: 300;
+}
+
+.bottom__cta_section .login__form_divisor_line {
+  margin: 24px 0;
+}
+
+.page__content {
+  color: var(--text_color);
+  padding: 100px 0;
+  font-size: 1.6rem;
+}
+
+.page__title {
+  color: var(--text_color);
+  font-size: 4rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid;
+}
+
+/*BANTAL NOW BTN START*/
+.custom__header_nav_item .btn__bantal_now {
+  animation: show_main_menu_animation 0.5s infinite;
+  fill: var(--warning_color) !important;
+}
+/*BANTAL NOW BTN END*/
+
 @media (max-width: 40rem) {
   .header__logo_wrapper {
     width: 150px !important;

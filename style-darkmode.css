@@ -508,6 +508,13 @@ footer .wpforms-container {
   border-bottom: 1px solid;
 }
 
+/*BANTAL NOW BTN START*/
+.custom__header_nav_item .btn__bantal_now {
+  animation: show_main_menu_animation 0.5s infinite;
+  fill: var(--warning_color) !important;
+}
+/*BANTAL NOW BTN END*/
+
 @media (max-width: 40rem) {
   .header__logo_wrapper {
     width: 150px !important;

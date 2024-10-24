@@ -3,6 +3,7 @@
 <?php get_header(); ?>
 
 <?php 
+$siteUrl = site_url();
 $hero = get_field("banner");
 $benefits = get_field("benefits_section"); 
 
@@ -17,7 +18,7 @@ $benefits = get_field("benefits_section");
 
         <div class="col-md-2 d-flex justify-content-end">
             <div class="d-block w-100">
-                <?= ButtonLink("#", "Assine já", "attention") ?>
+                <?= ButtonLink("$siteUrl/planos", "Assine já", "attention") ?>
             </div>
         </div>
     </div>  
