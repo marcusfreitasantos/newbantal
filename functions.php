@@ -9,7 +9,7 @@ $emailHeaders = array(
 
 function oceanwp_child_enqueue_parent_style() {
 
-	$version = "1.0.1";
+	$version = "1.0.2";
 	global $darkMode;
 	$cssChildFilePath = $darkMode ? '/style-darkmode.css' : '/style.css';
 
