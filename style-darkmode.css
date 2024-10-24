@@ -494,6 +494,20 @@ footer .wpforms-container {
   margin: 24px 0;
 }
 
+.page__content {
+  color: var(--text_color);
+  padding: 100px 0;
+  font-size: 1.6rem;
+}
+
+.page__title {
+  color: var(--text_color);
+  font-size: 4rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid;
+}
+
 @media (max-width: 40rem) {
   .header__logo_wrapper {
     width: 150px !important;
