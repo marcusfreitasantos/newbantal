@@ -11,15 +11,19 @@ function BantalPlanCard($planObj){
 
     ?>
         <div class="bantal__plans_card">
-            <img src="<?= $productImg['url']; ?>" alt="plan-logo" />
+            <div class="bantal__plans_card_img_wrapper">
+                <img src="<?= $productImg['url']; ?>" alt="plan-logo" />
+            </div>
             <div class="bantal__plans_card_info">
                 <span class="bantal__plans_price">R$<?= $price; ?></span>
                 <span class="bantal__plans_period"><?= $period; ?></span>
                 <span class="bantal__plans_period"><?= $splits; ?></span>
-                <?= ButtonLink($paymentUrl, 'Escolher', 'secondary', 'blank'); ?>
             </div>
-
-            <span class="bantal__plans_legal_txt"><?= $legalText; ?></span>
+            
+            <div class="bantal__plans_card_cta">
+                <?= ButtonLink($paymentUrl, 'Escolher', 'secondary', 'blank'); ?>
+                <span class="bantal__plans_legal_txt"><?= $legalText; ?></span>
+            </div>
 
             <div class="bantal__plans_card_details_btn more__details">
                 <span>Ver detalhes</span>
