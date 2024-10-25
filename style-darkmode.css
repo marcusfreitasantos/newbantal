@@ -563,7 +563,17 @@ footer .wpforms-container {
 .bantal__plans_cards_container {
   width: 95%;
   padding: 20px;
+  margin: auto;
 }
+
+.bantal__plans_card_info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  height: 120px;
+}
+
 .bantal__plans_card {
   padding: 20px;
   background-color: white;
@@ -573,7 +583,7 @@ footer .wpforms-container {
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  min-height: 300px;
+  height: 320px;
 }
 
 .bantal__plans_card img {
@@ -688,5 +698,13 @@ footer .wpforms-container {
 
   .button__link_wrapper {
     width: 100%;
+  }
+
+  .bantal__plans_card_info {
+    height: auto;
+  }
+
+  .bantal__plans_card {
+    height: auto;
   }
 }

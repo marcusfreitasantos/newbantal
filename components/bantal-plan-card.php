@@ -12,8 +12,7 @@ function BantalPlanCard($planObj){
     ?>
         <div class="bantal__plans_card">
             <img src="<?= $productImg['url']; ?>" alt="plan-logo" />
-            <div class="d-flex flex-column gap-3 text-center">
-
+            <div class="bantal__plans_card_info">
                 <span class="bantal__plans_price">R$<?= $price; ?></span>
                 <span class="bantal__plans_period"><?= $period; ?></span>
                 <span class="bantal__plans_period"><?= $splits; ?></span>
