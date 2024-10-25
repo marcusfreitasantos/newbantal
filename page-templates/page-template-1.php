@@ -7,6 +7,18 @@ $siteUrl = site_url();
 $hero = get_field("banner");
 $benefits = get_field("benefits_section"); 
 
+function heroBannerBgConfig($imgUrl){
+    $heroBannerStyle = 
+    "background-image:
+    linear-gradient(-145deg, rgba(245, 246, 252, 0), rgba(0, 0, 0, 0.8)),
+    url('$imgUrl');
+    border-radius: 15px; 
+    overflow: hidden;";
+
+
+    return $heroBannerStyle;
+};
+
 ?>
 
 <section class="free__warning_section">
@@ -32,7 +44,7 @@ $benefits = get_field("benefits_section");
                 <?php foreach($hero as $heroBanner){ ?>
     
                     <div class="swiper-slide">
-                        <div class="row p-5  h-100" style="background: url('<?= $heroBanner['background_image']; ?>'); border-radius: 15px; overflow: hidden;">
+                        <div class="row p-5  h-100" style="<?= heroBannerBgConfig($heroBanner['background_image']); ?> ">
                             <div class="col-md-4 d-flex flex-column justify-content-end">
                                 <div class="hero__content">
 
@@ -61,6 +73,9 @@ $benefits = get_field("benefits_section");
             </div>
 
             <div class="swiper-pagination"></div>
+            <div id="hero__carousel_prev_btn" class="swiper-button-prev"></div>
+            <div id="hero__carousel_next_btn" class="swiper-button-next"></div>
+
 
         </div>
     </div>

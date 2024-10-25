@@ -1,6 +1,5 @@
 <?php
-global $darkMode, $emailHeaders;
-$darkMode = true;
+global $emailHeaders;
 
 $emailHeaders = array(
 	'Content-Type: text/html; charset=UTF-8',
@@ -10,10 +9,8 @@ $emailHeaders = array(
 function oceanwp_child_enqueue_parent_style() {
 
 	$version = "1.0.2";
-	global $darkMode;
-	$cssChildFilePath = $darkMode ? '/style-darkmode.css' : '/style.css';
 
-	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . $cssChildFilePath, array( 'oceanwp-style' ), $version );
+	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( 'oceanwp-style' ), $version );
 	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/libs/bootstrap/css/bootstrap.min.css',array(), $version );
 	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/libs/fontawesome/css/fontawesome.css',array(), $version );
 	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/libs/fontawesome/css/regular.css',array(), $version );
