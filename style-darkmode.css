@@ -583,7 +583,7 @@ footer .wpforms-container {
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  height: 320px;
+  min-height: 320px;
 }
 
 .bantal__plans_card img {
