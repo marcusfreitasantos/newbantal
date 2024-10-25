@@ -7,7 +7,7 @@ $bannerBg = get_field("banner_background");
     $args = array(
 		'posts_per_page'      => -1,
 		'orderby'          => 'date',
-		'order'            => 'DESC',
+		'order'            => 'ASC',
 		'post_type'        => 'plano',
         'status'           => 'publish'
 	);	
