@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginFormBtn = document.querySelector(".header__login_form_btn");
 
   loginFormBtn.addEventListener("mouseover", function () {
-    console.log("over");
     loginForm.style.display = "block";
   });
 

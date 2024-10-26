@@ -492,7 +492,7 @@ footer .wpforms-container {
 
 .page__content {
   color: var(--text_color);
-  padding: 100px 0;
+  padding: 60px 0;
   font-size: 1.6rem;
 }
 
@@ -708,6 +708,49 @@ textarea:focus {
   border: 2px solid var(--secondary_color) !important;
   background-color: transparent;
 }
+/*CONTACT END*/
+
+/*ABOUT PAGE START*/
+.page__subtitle {
+  font-size: 2rem;
+  color: var(--secondary_color);
+  font-weight: 300;
+}
+
+.page__main_img {
+  max-height: 800px;
+  width: 100%;
+  object-fit: cover !important;
+  object-position: top center;
+  border-radius: 15px;
+}
+
+.page__content_card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 40px;
+}
+
+.page__content_card img {
+  max-width: 150px;
+}
+
+.page__content_card h3 {
+  color: var(--text_color);
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.page__content_card p {
+  color: var(--text_color);
+  font-weight: 300;
+  font-size: 1.4rem;
+  text-align: center;
+}
+/*ABOUT PAGE END*/
 
 @media (max-width: 40rem) {
   .header__logo_wrapper {
