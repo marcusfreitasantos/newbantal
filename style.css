@@ -221,27 +221,6 @@ footer .wpforms-container {
   margin: 0 !important;
 }
 
-.newsletter_input_row {
-  display: flex;
-  align-items: center;
-}
-
-#newsletter_form .newsletter_input {
-  background: none !important;
-  border: 1px solid var(--text_color) !important;
-  border-right: 0 !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  height: 45px !important;
-}
-
-#newsletter_form .newsletter_btn {
-  color: var(--text_color) !important;
-  background: none !important;
-  border: 1px solid var(--text_color) !important;
-  height: 45px !important;
-}
-
 .footer__social_links {
   display: flex;
   gap: 12px;
@@ -522,7 +501,13 @@ footer .wpforms-container {
   font-size: 4rem;
   font-weight: 600;
   margin-bottom: 2rem;
-  border-bottom: 1px solid;
+}
+
+.page__title_invert {
+  color: var(--text_color_invert);
+  font-size: 4rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
 }
 
 /*BANTAL NOW BTN START*/
@@ -677,6 +662,52 @@ footer .wpforms-container {
   }
 }
 /*BANTAL PLAN CARDS END*/
+
+input[type="text"],
+input[type="email"] {
+  border-radius: 50px !important;
+  color: var(--text_color_invert) !important;
+  border: 2px solid white !important;
+}
+
+textarea {
+  border-radius: 15px !important;
+  color: var(--text_color_invert) !important;
+  border: 2px solid white !important;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+textarea::placeholder {
+  color: var(--secondary_color);
+}
+
+input[type="submit"]:hover {
+  background-color: var(--primary_color_hover);
+}
+
+/*CONTACT PAGE*/
+.contact__form_wrapper {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.contact__form_wrapper input[type="text"],
+.contact__form_wrapper input[type="email"] {
+  border: 2px solid #eee !important;
+}
+
+.contact__form_wrapper textarea {
+  border: 2px solid #eee !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border: 2px solid var(--secondary_color) !important;
+  background-color: transparent;
+}
 
 @media (max-width: 40rem) {
   .header__logo_wrapper {
