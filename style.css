@@ -248,6 +248,10 @@ footer .wpforms-container {
   border-radius: 5px;
   margin: 5px;
   transition: 0.5s;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .clients__card:hover {

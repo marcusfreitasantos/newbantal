@@ -132,7 +132,7 @@ function saveCompaniesFromApiToDatabase($company){
 	}
 }
 
-function getAllCompaniesFromDatabase($limit) {
+function getAllCompaniesFromDatabase($limit = 100) {
     global $wpdb;
 
     $tableName = $wpdb->prefix . 'bantal_clients';
