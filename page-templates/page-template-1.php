@@ -37,7 +37,7 @@ function heroBannerBgConfig($imgUrl){
 </section>
 
 <section class="hero__carousel_section">
-    <div class="container h-100">
+    <div class="hero__carousel_container">
         <div class="hero__carousel">
             <div class="swiper-wrapper">
 
@@ -122,7 +122,7 @@ function heroBannerBgConfig($imgUrl){
     const heroCarousel = new Swiper(".hero__carousel", {
         direction: "horizontal",
         loop: true,
-        slidesPerView: 1.1,
+        slidesPerView: 1,
         spaceBetween: 30,
         initialSlide: 1,
         autoplay: {

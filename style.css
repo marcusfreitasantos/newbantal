@@ -261,6 +261,10 @@ footer .wpforms-container {
 }
 
 /*SWIPER - START*/
+.swiper-pagination {
+  top: 90% !important;
+}
+
 .swiper-pagination-bullet {
   width: 50px !important;
   border-radius: 2px !important;
@@ -288,6 +292,13 @@ footer .wpforms-container {
 .hero__carousel_section {
   height: 75vh;
   position: relative;
+}
+
+.hero__carousel_container {
+  width: 95%;
+  padding: 20px;
+  margin: auto;
+  height: 100%;
 }
 
 #hero__carousel_prev_btn,
