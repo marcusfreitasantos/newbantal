@@ -14,11 +14,11 @@
                     <span class="bottom__cta_text">Baixe gratuitamente</span>
 
                     <div class="row mt-3">
-                        <a href="#" class="col-md-4">
+                        <a href="https://play.google.com/store/apps/details?id=com.bantal" target="_blank" class="col-md-3">
                             <img src="<?php echo $childThemeDirectory; ?>/assets/img/playstore-img.png" />
                         </a>
                         
-                        <a href="#" class="col-md-4">
+                        <a href="#" class="col-md-3">
                             <img src="<?php echo $childThemeDirectory; ?>/assets/img/appstore-img.png" />
                         </a>
                     </div>
