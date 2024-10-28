@@ -2,9 +2,6 @@
     ob_start();
     $siteUrl = site_url();
     $companiesList = getAllCompaniesFromDatabase(15);
-
-    
-
     ?>
     <section class="clients__carousel_section">
         <div class="container">
@@ -30,8 +27,11 @@
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="button__link_wrapper mt-2 col-md-2">
+                <?= ButtonLink("$siteUrl/empresas", "Ver todas") ?>
+            </div>
+        </div>
     </section>
 
     

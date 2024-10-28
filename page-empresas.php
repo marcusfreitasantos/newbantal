@@ -3,7 +3,7 @@
 
 <section class="py-5 my-5">
     <div class="container">
-        <h1 class="section__title pb-5">Empresas que estão anunciando na Bantal</h1>
+        <h1 class="section__title mb-5">Empresas que estão anunciando na Bantal</h1>
 
         <div class="row">
             <?php foreach($companiesList as $company){

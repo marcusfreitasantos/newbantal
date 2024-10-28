@@ -767,6 +767,13 @@ textarea:focus {
 }
 /*ABOUT PAGE END*/
 
+.link__text {
+  font-size: 1.4rem;
+  color: var(--text_color);
+  font-weight: 300;
+  text-decoration: none;
+}
+
 @media (max-width: 40rem) {
   .header__logo_wrapper {
     width: 150px !important;
