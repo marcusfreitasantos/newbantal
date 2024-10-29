@@ -511,18 +511,17 @@ footer .wpforms-container {
   font-size: 1.6rem;
 }
 
-.page__title {
+.page__title,
+.page__title_invert {
   color: var(--text_color);
   font-size: 4rem;
-  font-weight: 600;
+  line-height: 4.5rem;
+  font-weight: bold;
   margin-bottom: 2rem;
 }
 
 .page__title_invert {
   color: var(--text_color_invert);
-  font-size: 4rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
 }
 
 /*BANTAL NOW BTN START*/
