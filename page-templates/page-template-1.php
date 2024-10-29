@@ -25,7 +25,7 @@ function heroBannerBgConfig($imgUrl){
     <div class="row align-items-center">
         <div class="col-md-10 mb-3">
             <h2 class="free__warning_title">Você está na Bantal gratuita</h2>
-            <p class="free__warning_text">Assine o Bantal Premium e mergulhe em um universo de possiblidades!</p>
+            <p class="free__warning_text">Assine o Bantal Premium e mergulhe em um universo de possibilidades!</p>
         </div>
 
         <div class="col-md-2 d-flex justify-content-end">
