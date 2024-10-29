@@ -19,16 +19,15 @@ $googleApiKey = GOOGLE_MAPS_API_KEY;
         
         navigator.geolocation.getCurrentPosition((position) => {
             currentUserLat = position.coords.latitude;
-            currentUserLong = position.coords.longitude
+            currentUserLong = position.coords.longitude;
+            initMap();
         });
-
-        let map;
 
         async function initMap() {
             const { Map } = await google.maps.importLibrary("maps");
             const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-            map = new Map(document.getElementById("bantal__custom_map"), {
+            let map = new Map(document.getElementById("bantal__custom_map"), {
                 center: { lat: currentUserLat, lng: currentUserLong },
                 zoom: 15,
                 mapId: "bantal__custom_map",
@@ -44,7 +43,8 @@ $googleApiKey = GOOGLE_MAPS_API_KEY;
                     alert(`Suas coordenaadas são: ${currentUserLat} , ${currentUserLong}`)
                 });
         }
-        initMap();
+
+        
 
 
     </script>
