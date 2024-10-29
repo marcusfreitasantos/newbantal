@@ -38,6 +38,7 @@ include("components/companies-logo-carousel.php");
 include("components/login-form.php");
 include("components/bottom-cta.php");
 include("components/bantal-plan-card.php");
+include("components/google-maps.php");
 
 
 function getAllPostCategories(){
