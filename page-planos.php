@@ -17,7 +17,7 @@ $bannerBg = get_field("banner_background");
 
 <style>
     .bantal__plans_section{
-        padding: 200px 0;
+        padding: 60px 0;
         background: url(<?= $bannerBg; ?>) center center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -37,7 +37,7 @@ $bannerBg = get_field("banner_background");
     </div>
 </section>
 
-<section class="bantal__plans_section_cards py-5">
+<section class="bantal__plans_section_cards py-2">
     <div class="bantal__plans_cards_container">
         <div class="row">
             <?php if($getCurrentPlans->have_posts()){

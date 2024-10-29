@@ -548,6 +548,13 @@ footer .wpforms-container {
   margin: auto;
 }
 
+.bantal__plans_legal_txt {
+  height: 20px;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+  margin-top: 10px;
+}
+
 .bantal__plans_title {
   font-size: 10rem;
   color: white;
