@@ -51,8 +51,4 @@ $googleApiKey = GOOGLE_MAPS_API_KEY;
 
 
     <div id="bantal__custom_map" style="height: 600px"></div>
-<?php } ?>
-
-
-
-
+<?php }
