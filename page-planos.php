@@ -106,7 +106,13 @@ $bannerBg = get_field("banner_background");
     const btnCategoryPlan = [...document.querySelectorAll(".plan__category_btn")];
     btnCategoryPlan.map((categoryBtn) => {
         categoryBtn.addEventListener("click", function(e){
+
+            btnCategoryPlan.map((categoryBtnInactive => {
+                categoryBtnInactive.classList.remove("active")
+            }))
             
+            e.currentTarget.classList.add("active")
+
             if(e.currentTarget.id === "plan__category_month"){
                 document.querySelector(".month__plans").style.display = "flex";
                 document.querySelector(".annual__plans").style.display = "none";
@@ -116,8 +122,5 @@ $bannerBg = get_field("banner_background");
             }
         })
     })
-
-
-
 </script>
 <?php get_footer();?>
