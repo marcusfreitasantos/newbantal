@@ -63,11 +63,10 @@ function generateLogFiles($folderPath, $logMessage){
 
 function getCompaniesFromApi(){
 	$baseApiUrl = BANTAL_API_PUBLIC_URL;
-	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 120));
+	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 300));
 
 	 if (!is_wp_error( $apiResponse ) ) {
-				generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in geting clients from api. Error message: .... \n");
-
+		generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in geting clients from api. Error message: .... \n");
 
         $usersList = json_decode($apiResponse["body"]);
 
@@ -100,7 +99,9 @@ function saveCompaniesFromApiToDatabase($company){
 	if($existingCompany){
 		$dataToUpdate = array(
 			'company_name' => $company->displayName,
-			'company_logo' =>  $company->foto
+			'company_logo' =>  $company->foto,
+			'company_lat' => $company->latitude,
+			'company_long' => $company->longitude
 		);
 
 		$where = array(
@@ -109,7 +110,7 @@ function saveCompaniesFromApiToDatabase($company){
 
 		$whereFormat = array('%d');
 
-		$dataToUpdateFormat = array('%s', '%s');
+		$dataToUpdateFormat = array('%s', '%s', '%f', '%f');
 		
 		$wpdb->update($tableName, $dataToUpdate, $where, $dataToUpdateFormat, $whereFormat);
 
@@ -117,10 +118,12 @@ function saveCompaniesFromApiToDatabase($company){
 		$data = array(
 			'company_id' => $company->userId,
 			'company_name' => $company->displayName,
-			'company_logo' =>  $company->foto
+			'company_logo' =>  $company->foto,
+			'company_lat' => $company->latitude,
+			'company_long' => $company->longitude
 		);
 
-		$format = array('%d', '%s', '%s');
+		$format = array('%d', '%s', '%s', '%f', '%f');
 
 		$wpdb->insert($tableName, $data, $format);
 
@@ -132,6 +135,86 @@ function saveCompaniesFromApiToDatabase($company){
 		} 
 	}
 }
+
+
+function getUsersFromApi(){
+	$baseApiUrl = BANTAL_API_PUBLIC_URL;
+	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 300));
+
+	 if (!is_wp_error( $apiResponse ) ) {
+		generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in geting clients from api. Error message: .... \n");
+
+        $usersList = json_decode($apiResponse["body"]);
+
+		if(!empty($usersList)){
+			foreach($usersList as $user){
+				if($user->perfil != "EMPLOYER"){
+					saveUsersFromApiToDatabase($user);
+				}
+			}
+		}
+	 }else{
+		$errorMsg = $apiResponse->get_error_message();
+		$currentDate = date("Y-m-d H:i:s");
+		generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in geting clients from api. Error message: $errorMsg. $currentDate. \n");
+        return;
+	 }
+}
+add_action("getUsersFromApiHook", "getUsersFromApi");
+
+
+function saveUsersFromApiToDatabase($user){
+	global $wpdb;
+
+	$tableName = $wpdb->prefix . 'bantal_users';
+
+	$existingCompany = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM $tableName WHERE user_id = %d", $user->userId
+    ));
+
+	if($existingCompany){
+		$dataToUpdate = array(
+			'user_name' => $user->displayName,
+			'user_avatar' =>  $user->foto,
+			'user_lat' => $user->latitude,
+			'user_long' => $user->longitude
+		);
+
+		$where = array(
+			'user_id' => $user->userId
+		);
+
+		$whereFormat = array('%d');
+
+		$dataToUpdateFormat = array('%s', '%s', '%f', '%f');
+		
+		$wpdb->update($tableName, $dataToUpdate, $where, $dataToUpdateFormat, $whereFormat);
+
+	}else{
+		$data = array(
+			'user_id' => $user->userId,
+			'user_name' => $user->displayName,
+			'user_avatar' =>  $user->foto,
+			'user_lat' => $user->latitude,
+			'user_long' => $user->longitude
+		);
+
+		$format = array('%d', '%s', '%s', '%f', '%f');
+
+		$wpdb->insert($tableName, $data, $format);
+
+		$insert_id = $wpdb->insert_id;
+	
+		if (!$insert_id) {
+			$currentDate = date("Y-m-d H:i:s");
+			generateLogFiles("/bantal-api-logs/database-operations/insert-data-log.txt", "Failed to insert data for $user->displayName. $currentDate. \n");
+		} 
+	}
+}
+
+
+
+
 
 function getAllCompaniesFromDatabase($limit = 100) {
     global $wpdb;
