@@ -678,7 +678,7 @@ footer .wpforms-container {
 
 .bantal__plans_card_resources {
   display: none;
-  padding: 24px 0;
+  padding-top: 24px;
 }
 
 .bantal__plans_card_details_btn i {

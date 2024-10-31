@@ -12,10 +12,10 @@
                         <div class="swiper-wrapper">
             
                             <?php foreach($companiesList as $company){
-                                if($company->company_logo){ ?>
+                                if($company->photo){ ?>
             
-                                    <a class="clients__card swiper-slide" href=<?= "https://recrutamento.bantal.com.br/empresa-vagas/lista-vagas-por-empresa/$company->company_id"; ?> target="_blank">
-                                        <img src="data:image/png; base64, <?= $company->company_logo; ?>" />
+                                    <a class="clients__card swiper-slide" href=<?= "https://recrutamento.bantal.com.br/empresa-vagas/lista-vagas-por-empresa/$company->user_id"; ?> target="_blank">
+                                        <img src="data:image/png; base64, <?= $company->photo; ?>" />
                                     </a>
             
                                 <?php }

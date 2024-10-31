@@ -24,10 +24,16 @@ function oceanwp_child_enqueue_parent_style() {
 	wp_enqueue_script( 'swiper-script',get_stylesheet_directory_uri() . '/assets/libs/swiper/js/swiper-bundle.min.js', array(), $version );
    	wp_enqueue_script( 'lightbox-script',get_stylesheet_directory_uri() . '/assets/libs/lightbox/js/lightbox.min.js', array(), $version );
 	wp_enqueue_script( 'child-script', get_stylesheet_directory_uri() . '/scripts.js', array(), $version );
-	
+
+	//AJAX
+	wp_enqueue_script( 'ajax-bantal-scripts', get_stylesheet_directory_uri() . '/assets/js/ajax-bantal-scripts.js', array('jquery'), null, true );
+    wp_localize_script( 'ajax-bantal-scripts', 'my_ajax_obj', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 }
 
 add_action( 'wp_enqueue_scripts', 'oceanwp_child_enqueue_parent_style' );
+
+
+
 
 
 include("components/button-link.php");
@@ -61,7 +67,7 @@ function generateLogFiles($folderPath, $logMessage){
 }
 
 
-function getCompaniesFromApi(){
+function getEmployersFromApi(){
 	$baseApiUrl = BANTAL_API_PUBLIC_URL;
 	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 300));
 
@@ -73,7 +79,7 @@ function getCompaniesFromApi(){
 		if(!empty($usersList)){
 			foreach($usersList as $company){
 				if($company->perfil == "EMPLOYER"){
-					saveCompaniesFromApiToDatabase($company);
+					saveClientsFromApi($company, "bantal_employers");
 				}
 			}
 		}
@@ -84,60 +90,10 @@ function getCompaniesFromApi(){
         return;
 	 }
 }
-add_action("getCompaniesFromApiHook", "getCompaniesFromApi");
+add_action("getEmployersFromApiHook", "getEmployersFromApi");
 
 
-function saveCompaniesFromApiToDatabase($company){
-	global $wpdb;
-
-	$tableName = $wpdb->prefix . 'bantal_clients';
-
-	$existingCompany = $wpdb->get_var($wpdb->prepare(
-        "SELECT COUNT(*) FROM $tableName WHERE company_id = %d", $company->userId
-    ));
-
-	if($existingCompany){
-		$dataToUpdate = array(
-			'company_name' => $company->displayName,
-			'company_logo' =>  $company->foto,
-			'company_lat' => $company->latitude,
-			'company_long' => $company->longitude
-		);
-
-		$where = array(
-			'company_id' => $company->userId
-		);
-
-		$whereFormat = array('%d');
-
-		$dataToUpdateFormat = array('%s', '%s', '%f', '%f');
-		
-		$wpdb->update($tableName, $dataToUpdate, $where, $dataToUpdateFormat, $whereFormat);
-
-	}else{
-		$data = array(
-			'company_id' => $company->userId,
-			'company_name' => $company->displayName,
-			'company_logo' =>  $company->foto,
-			'company_lat' => $company->latitude,
-			'company_long' => $company->longitude
-		);
-
-		$format = array('%d', '%s', '%s', '%f', '%f');
-
-		$wpdb->insert($tableName, $data, $format);
-
-		$insert_id = $wpdb->insert_id;
-	
-		if (!$insert_id) {
-			$currentDate = date("Y-m-d H:i:s");
-			generateLogFiles("/bantal-api-logs/database-operations/insert-data-log.txt", "Failed to insert data for $company->displayName. $currentDate. \n");
-		} 
-	}
-}
-
-
-function getUsersFromApi(){
+function getCandidatesFromApi(){
 	$baseApiUrl = BANTAL_API_PUBLIC_URL;
 	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 300));
 
@@ -148,8 +104,8 @@ function getUsersFromApi(){
 
 		if(!empty($usersList)){
 			foreach($usersList as $user){
-				if($user->perfil != "EMPLOYER"){
-					saveUsersFromApiToDatabase($user);
+				if($user->perfil == "CANDIDATE"){
+					saveClientsFromApi($user, "bantal_candidates");
 				}
 			}
 		}
@@ -160,28 +116,28 @@ function getUsersFromApi(){
         return;
 	 }
 }
-add_action("getUsersFromApiHook", "getUsersFromApi");
+add_action("getCandidatesFromApiHook", "getCandidatesFromApi");
 
 
-function saveUsersFromApiToDatabase($user){
+function saveClientsFromApi($client, $tableName){
 	global $wpdb;
 
-	$tableName = $wpdb->prefix . 'bantal_users';
+	$tableName = $wpdb->prefix . $tableName;
 
 	$existingCompany = $wpdb->get_var($wpdb->prepare(
-        "SELECT COUNT(*) FROM $tableName WHERE user_id = %d", $user->userId
+        "SELECT COUNT(*) FROM $tableName WHERE user_id = %d", $client->userId
     ));
 
 	if($existingCompany){
 		$dataToUpdate = array(
-			'user_name' => $user->displayName,
-			'user_avatar' =>  $user->foto,
-			'user_lat' => $user->latitude,
-			'user_long' => $user->longitude
+			'display_name' => $client->displayName,
+			'photo' =>  $client->foto,
+			'latitude' => $client->latitude,
+			'longitude' => $client->longitude
 		);
 
 		$where = array(
-			'user_id' => $user->userId
+			'user_id' => $client->userId
 		);
 
 		$whereFormat = array('%d');
@@ -192,11 +148,11 @@ function saveUsersFromApiToDatabase($user){
 
 	}else{
 		$data = array(
-			'user_id' => $user->userId,
-			'user_name' => $user->displayName,
-			'user_avatar' =>  $user->foto,
-			'user_lat' => $user->latitude,
-			'user_long' => $user->longitude
+			'user_id' => $client->userId,
+			'display_name' => $client->displayName,
+			'photo' =>  $client->foto,
+			'latitude' => $client->latitude,
+			'longitude' => $client->longitude
 		);
 
 		$format = array('%d', '%s', '%s', '%f', '%f');
@@ -207,7 +163,7 @@ function saveUsersFromApiToDatabase($user){
 	
 		if (!$insert_id) {
 			$currentDate = date("Y-m-d H:i:s");
-			generateLogFiles("/bantal-api-logs/database-operations/insert-data-log.txt", "Failed to insert data for $user->displayName. $currentDate. \n");
+			generateLogFiles("/bantal-api-logs/database-operations/insert-data-log.txt", "Failed to insert data for $client->displayName. $currentDate. \n");
 		} 
 	}
 }
@@ -216,10 +172,10 @@ function saveUsersFromApiToDatabase($user){
 
 
 
-function getAllCompaniesFromDatabase($limit = 100) {
+function getAllCompaniesFromDatabase($limit) {
     global $wpdb;
 
-    $tableName = $wpdb->prefix . 'bantal_clients';
+    $tableName = $wpdb->prefix . 'bantal_employers';
 
     $query = $wpdb->prepare("SELECT * FROM $tableName LIMIT %d", $limit);
 
@@ -228,9 +184,35 @@ function getAllCompaniesFromDatabase($limit = 100) {
     if ($companies) {
         return $companies;
     } else {
-        return "No companies found.";
+        return "No data found.";
     }
 }
 
+function getAllBantalUsersFromDatabase() {
+    global $wpdb;
+
+	$tableNameEmployers = $wpdb->prefix . 'bantal_employers';
+    $tableNameCandidates = $wpdb->prefix . 'bantal_candidates';
+
+	$query = $wpdb->prepare("
+		SELECT * FROM $tableNameEmployers
+		UNION
+		SELECT * FROM $tableNameCandidates
+		LIMIT %d
+	", 500);
+
+    $allBantalUsers = $wpdb->get_results($query);
+
+    if ($allBantalUsers) {
+        wp_send_json_success($allBantalUsers);
+    } else {
+        wp_send_json_error("No data found.");
+    }
+
+}
+
+
+add_action( 'wp_ajax_get_bantal_users_by_ajax', 'getAllBantalUsersFromDatabase' );
+add_action( 'wp_ajax_nopriv_get_bantal_users_by_ajax', 'getAllBantalUsersFromDatabase' );
 
 ?>
