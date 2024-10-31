@@ -817,6 +817,40 @@ textarea:focus {
   text-decoration: none;
 }
 
+/*MAP STYLES START*/
+.bantal__map_user_avatar_wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  font-size: 14px;
+  position: relative;
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bantal__map_user_avatar_wrapper img {
+  width: 100%;
+  max-width: 50px;
+  object-fit: cover;
+}
+
+.bantal__map_user_avatar_wrapper::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 0);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #ffffff;
+}
+/*MAP STYLES END*/
+
 @media (max-width: 40rem) {
   .header__logo_wrapper {
     width: 150px !important;
