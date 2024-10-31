@@ -8,6 +8,7 @@ function callAjaxGetUsers() {
         action: "get_bantal_users_by_ajax",
       },
       success: function (response) {
+        console.log("ajax call succeeded");
         resolve(response.data);
       },
       error: function (error) {

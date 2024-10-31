@@ -8,7 +8,7 @@ $emailHeaders = array(
 
 function oceanwp_child_enqueue_parent_style() {
 
-	$version = "1.0.2";
+	$version = "1.0.3";
 
 	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( 'oceanwp-style' ), $version );
 	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/libs/bootstrap/css/bootstrap.min.css',array(), $version );
@@ -26,7 +26,7 @@ function oceanwp_child_enqueue_parent_style() {
 	wp_enqueue_script( 'child-script', get_stylesheet_directory_uri() . '/scripts.js', array(), $version );
 
 	//AJAX
-	wp_enqueue_script( 'ajax-bantal-scripts', get_stylesheet_directory_uri() . '/assets/js/ajax-bantal-scripts.js', array('jquery'), null, true );
+	wp_enqueue_script( 'ajax-bantal-scripts', get_stylesheet_directory_uri() . '/assets/js/ajax-bantal-scripts.js', array('jquery'), $version, true );
     wp_localize_script( 'ajax-bantal-scripts', 'my_ajax_obj', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 }
 
