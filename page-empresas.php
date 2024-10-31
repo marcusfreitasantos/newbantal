@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<?php $companiesList = getAllCompaniesFromDatabase(); ?>
+<?php $companiesList = getAllCompaniesFromDatabase(100); ?>
 
 <section class="py-5 my-5">
     <div class="container">
@@ -7,10 +7,10 @@
 
         <div class="row">
             <?php foreach($companiesList as $company){
-                if($company->company_logo){ ?>
+                if($company->photo){ ?>
                     <div class="col-md-2 mb-5">
-                        <a class="clients__card" href=<?= "https://recrutamento.bantal.com.br/empresa-vagas/lista-vagas-por-empresa/$company->company_id"; ?> target="_blank">
-                            <img src="data:image/png; base64, <?= $company->company_logo; ?>" />
+                        <a class="clients__card" href=<?= "https://recrutamento.bantal.com.br/empresa-vagas/lista-vagas-por-empresa/$company->user_id"; ?> target="_blank">
+                            <img src="data:image/png; base64, <?= $company->photo; ?>" />
                         </a>
                     </div>
                 <?php }
