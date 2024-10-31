@@ -53,6 +53,7 @@ $defaultUserAvatar = "$childThemeDirectory/assets/img/favicon.png";
             map,
             position: { lat: currentUserLat, lng: currentUserLong },
             content: currentUserPin.element,
+            zIndex: 5
         });
 
         const allUsers = await getAllUsers();

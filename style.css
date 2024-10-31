@@ -825,7 +825,6 @@ textarea:focus {
   font-size: 14px;
   position: relative;
   background-color: white;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -835,13 +834,15 @@ textarea:focus {
   width: 100%;
   max-width: 50px;
   object-fit: cover;
+  overflow: hidden;
+  border-radius: 50px;
 }
 
 .bantal__map_user_avatar_wrapper::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: 100%;
+  top: 98%;
   transform: translate(-50%, 0);
   width: 0;
   height: 0;
