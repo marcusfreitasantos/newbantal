@@ -9,7 +9,7 @@
 
                    <form class="row gap-3 custom__map_form">
                         <input id="map__input_address" class="col-12" type="text" value="" placeholder="Endereço, bairro, cidade" />
-                        <input id="map__input_service" class="col-12" type="text" value="" placeholder="Profissional ou serviço" />
+                        <input id="map__input_services" class="col-12" type="text" value="" placeholder="Profissional ou serviço" />
                         <input id="map__input_field" class="col-12" type="text" value="" placeholder="Área de atuação" />
                         <?= ButtonLink("#", "Pesquisar", "submit"); ?>
                    </form>

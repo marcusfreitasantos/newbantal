@@ -15,12 +15,29 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
         let currentUserLat = 0;
         let currentUserLong = 0;
         let map;
+        let services = "";
+        let field = "";
+        let typingTimer;
+        const delayTimeout = 1000;
 
-        function updateMapCenter(e) {
-            e.preventDefault()
-            console.log(e.currentTarget)
+        function updateMapCenter(locationObj) {
+
+            console.log(locationObj)
             if (map) {
-                map.setCenter({ lat: 37.7749, lng: -122.4194 });
+                map.setCenter({ lat: Number(locationObj.lat), lng: Number(locationObj.lng) });
+            }
+        }
+
+        async function getCoordsByAddress(newAddress){
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${newAddress}&key=<?= $googleApiKey; ?>`
+            try{
+                const req = await fetch(url);
+                const response = await req.json();
+                const locationObj = response.results[0].geometry.location
+                updateMapCenter(locationObj)
+            }catch(e){
+                alert("Localização não encontrada, verifique se você digitou corretamente!")
+                console.log("Error: ", e.message)
             }
         }
 
@@ -99,9 +116,39 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                 }
             });
 
-            const btnSubmit = document.querySelector(".custom__map_form a")
-            btnSubmit.addEventListener("click", updateMapCenter)
-            console.log("btnSubmit", btnSubmit)
+            const btnSubmit = document.querySelector(".custom__map_form a");
+            const customMapAddress = document.querySelector("#map__input_address");
+            const customMapServices = document.querySelector("#map__input_services");
+            const customMapField = document.querySelector("#map__input_field");
+
+            customMapAddress.addEventListener("keyup", function(e){
+                const inputValue = e.currentTarget.value
+                clearTimeout(typingTimer)
+                typingTimer = setTimeout(function(){
+                    getCoordsByAddress(encodeURIComponent(inputValue))
+                }, delayTimeout)
+            })
+
+            customMapServices.addEventListener("keyup", function(e){
+                const inputValue = e.currentTarget.value
+                clearTimeout(typingTimer)
+                typingTimer = setTimeout(function(){
+                    services = inputValue
+                }, delayTimeout)
+            })
+
+            customMapField.addEventListener("keyup", function(e){
+                const inputValue = e.currentTarget.value
+                clearTimeout(typingTimer)
+                typingTimer = setTimeout(function(){
+                    field = inputValue
+                }, delayTimeout)
+            })
+            
+            btnSubmit.addEventListener("click", function(e){
+                e.preventDefault()
+                updateMapCenter()
+            })
         }
     </script>
 
