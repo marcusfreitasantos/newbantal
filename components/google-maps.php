@@ -4,6 +4,7 @@ function GoogleMaps(){ ?>
 $googleApiKey = GOOGLE_MAPS_API_KEY; 
 $childThemeDirectory = get_stylesheet_directory_uri();
 $defaultUserAvatar = "$childThemeDirectory/assets/img/favicon.png";
+$geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%20Sussex%20Drive%20Ottawa%20ON&key=$googleApiKey"
 ?>
 
     <!-- prettier-ignore -->
@@ -13,6 +14,15 @@ $defaultUserAvatar = "$childThemeDirectory/assets/img/favicon.png";
     <script>
         let currentUserLat = 0;
         let currentUserLong = 0;
+        let map;
+
+        function updateMapCenter(e) {
+            e.preventDefault()
+            console.log(e.currentTarget)
+            if (map) {
+                map.setCenter({ lat: 37.7749, lng: -122.4194 });
+            }
+        }
 
         if ("geolocation" in navigator)
         navigator.geolocation.getCurrentPosition((position) => {
@@ -31,42 +41,42 @@ $defaultUserAvatar = "$childThemeDirectory/assets/img/favicon.png";
         }
 
         async function initMap() {
-        const { Map } = await google.maps.importLibrary("maps");
-        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
-            "marker"
-        );
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
+                "marker"
+            );
 
-        let map = new Map(document.getElementById("bantal__custom_map"), {
-            center: { lat: currentUserLat, lng: currentUserLong },
-            zoom: 14,
-            mapId: "bantal__custom_map",
-            disableDefaultUI: true,
-        });
+            map = new Map(document.getElementById("bantal__custom_map"), {
+                center: { lat: currentUserLat, lng: currentUserLong },
+                zoom: 14,
+                mapId: "bantal__custom_map",
+                disableDefaultUI: true,
+            });
 
-        const currentUserPin = new PinElement({
-            scale: 2,
-            background: "#f0903a",
-            borderColor: "#f0903a",
-        });
+            const currentUserPin = new PinElement({
+                scale: 2,
+                background: "#f0903a",
+                borderColor: "#f0903a",
+            });
 
-        const marker = new AdvancedMarkerElement({
-            map,
-            position: { lat: currentUserLat, lng: currentUserLong },
-            content: currentUserPin.element,
-            zIndex: 5
-        });
+            const marker = new AdvancedMarkerElement({
+                map,
+                position: { lat: currentUserLat, lng: currentUserLong },
+                content: currentUserPin.element,
+                zIndex: 5
+            });
 
-        const allUsers = await getAllUsers();
+            const allUsers = await getAllUsers();
 
-        const buildContent = (userAvatar) => {
-            const bantalUsersAvatar = document.createElement("div");
-            bantalUsersAvatar.innerHTML = `
-            <div class='bantal__map_user_avatar_wrapper'>
-                <img src='${userAvatar}' />
-            </div>
-            `
-            return bantalUsersAvatar;
-        }
+            const buildContent = (userAvatar) => {
+                const bantalUsersAvatar = document.createElement("div");
+                bantalUsersAvatar.innerHTML = `
+                <div class='bantal__map_user_avatar_wrapper'>
+                    <img src='${userAvatar}' />
+                </div>
+                `
+                return bantalUsersAvatar;
+            }
 
             allUsers.map((bantalUser) => {
                 if (bantalUser.latitude && bantalUser.longitude) {
@@ -78,7 +88,7 @@ $defaultUserAvatar = "$childThemeDirectory/assets/img/favicon.png";
                         lat: Number(bantalUser.latitude),
                         lng: Number(bantalUser.longitude),
                         },
-                        content: buildContent(bantalUser.photo ? avatarBase64Url : "<?= $defaultUserAvatar; ?>")
+                        content: buildContent(bantalUser.photo && bantalUser.role !== "CANDIDATE" ? avatarBase64Url : "<?= $defaultUserAvatar; ?>")
                     });
 
                     bantalUserMarker.addListener("click", ({ domEvent, latLng }) => {
@@ -88,6 +98,10 @@ $defaultUserAvatar = "$childThemeDirectory/assets/img/favicon.png";
                     });
                 }
             });
+
+            const btnSubmit = document.querySelector(".custom__map_form a")
+            btnSubmit.addEventListener("click", updateMapCenter)
+            console.log("btnSubmit", btnSubmit)
         }
     </script>
 

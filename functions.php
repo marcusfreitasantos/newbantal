@@ -67,7 +67,7 @@ function generateLogFiles($folderPath, $logMessage){
 }
 
 
-function getEmployersFromApi(){
+function getUsersFromApi(){
 	$baseApiUrl = BANTAL_API_PUBLIC_URL;
 	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 300));
 
@@ -78,9 +78,7 @@ function getEmployersFromApi(){
 
 		if(!empty($usersList)){
 			foreach($usersList as $company){
-				if($company->perfil == "EMPLOYER"){
-					saveClientsFromApi($company, "bantal_employers");
-				}
+				saveUsersFromApiInDatabase($company);
 			}
 		}
 	 }else{
@@ -90,39 +88,14 @@ function getEmployersFromApi(){
         return;
 	 }
 }
-add_action("getEmployersFromApiHook", "getEmployersFromApi");
+add_action("getUsersFromApiHook", "getUsersFromApi");
 
 
-function getCandidatesFromApi(){
-	$baseApiUrl = BANTAL_API_PUBLIC_URL;
-	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 300));
 
-	 if (!is_wp_error( $apiResponse ) ) {
-		generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in geting clients from api. Error message: .... \n");
-
-        $usersList = json_decode($apiResponse["body"]);
-
-		if(!empty($usersList)){
-			foreach($usersList as $user){
-				if($user->perfil == "CANDIDATE"){
-					saveClientsFromApi($user, "bantal_candidates");
-				}
-			}
-		}
-	 }else{
-		$errorMsg = $apiResponse->get_error_message();
-		$currentDate = date("Y-m-d H:i:s");
-		generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in geting clients from api. Error message: $errorMsg. $currentDate. \n");
-        return;
-	 }
-}
-add_action("getCandidatesFromApiHook", "getCandidatesFromApi");
-
-
-function saveClientsFromApi($client, $tableName){
+function saveUsersFromApiInDatabase($client){
 	global $wpdb;
 
-	$tableName = $wpdb->prefix . $tableName;
+	$tableName = $wpdb->prefix . 'bantal_users' ;
 
 	$existingCompany = $wpdb->get_var($wpdb->prepare(
         "SELECT COUNT(*) FROM $tableName WHERE user_id = %d", $client->userId
@@ -133,7 +106,10 @@ function saveClientsFromApi($client, $tableName){
 			'display_name' => $client->displayName,
 			'photo' =>  $client->foto,
 			'latitude' => $client->latitude,
-			'longitude' => $client->longitude
+			'longitude' => $client->longitude,
+			'role' => $client->perfil,
+			'services' => $client->servicos,
+			'occupation_id' => $client->idAreaAtuacao
 		);
 
 		$where = array(
@@ -142,7 +118,7 @@ function saveClientsFromApi($client, $tableName){
 
 		$whereFormat = array('%d');
 
-		$dataToUpdateFormat = array('%s', '%s', '%f', '%f');
+		$dataToUpdateFormat = array('%s', '%s', '%f', '%f', '%s', '%s', '%d');
 		
 		$wpdb->update($tableName, $dataToUpdate, $where, $dataToUpdateFormat, $whereFormat);
 
@@ -152,10 +128,13 @@ function saveClientsFromApi($client, $tableName){
 			'display_name' => $client->displayName,
 			'photo' =>  $client->foto,
 			'latitude' => $client->latitude,
-			'longitude' => $client->longitude
+			'longitude' => $client->longitude,
+			'role' => $client->perfil,
+			'services' => $client->servicos,
+			'occupation_id' => $client->idAreaAtuacao
 		);
 
-		$format = array('%d', '%s', '%s', '%f', '%f');
+		$format = array('%d', '%s', '%s', '%f', '%f', '%s', '%s', '%d');
 
 		$wpdb->insert($tableName, $data, $format);
 
@@ -169,15 +148,12 @@ function saveClientsFromApi($client, $tableName){
 }
 
 
-
-
-
 function getAllCompaniesFromDatabase($limit) {
     global $wpdb;
 
-    $tableName = $wpdb->prefix . 'bantal_employers';
+    $tableName = $wpdb->prefix . 'bantal_users';
 
-    $query = $wpdb->prepare("SELECT * FROM $tableName LIMIT %d", $limit);
+    $query = $wpdb->prepare("SELECT * FROM $tableName WHERE role = 'EMPLOYER' LIMIT %d", $limit);
 
     $companies = $wpdb->get_results($query);
 
@@ -191,15 +167,9 @@ function getAllCompaniesFromDatabase($limit) {
 function getAllBantalUsersFromDatabase() {
     global $wpdb;
 
-	$tableNameEmployers = $wpdb->prefix . 'bantal_employers';
-    $tableNameCandidates = $wpdb->prefix . 'bantal_candidates';
+	$tableName = $wpdb->prefix . 'bantal_users';
 
-	$query = $wpdb->prepare("
-		SELECT * FROM $tableNameEmployers
-		UNION
-		SELECT * FROM $tableNameCandidates
-		LIMIT %d
-	", 500);
+	$query = $wpdb->prepare("SELECT * FROM $tableName LIMIT %d", 500);
 
     $allBantalUsers = $wpdb->get_results($query);
 
