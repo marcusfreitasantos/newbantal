@@ -227,5 +227,5 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
         }
     </script>
 
-    <div id="bantal__custom_map" style="height: 600px"></div>
+    <div id="bantal__custom_map" style="height: 85vh"></div>
 <?php }

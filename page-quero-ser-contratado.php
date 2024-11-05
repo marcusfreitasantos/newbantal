@@ -1,17 +1,18 @@
 <?php get_header(); ?>
 
-<section class="contact__section py-5 my-5">
-    <div class="container">
-        <div class="contact__form_wrapper">
-            <div class="row align-items-center">  
+<section class="">
+    <div class="custom__map_container">
+            <div class="row">  
                 <div class="col-md-4 p-5">
-                   <h1 class="page__title_invert">Qual empresa ou profissional deseja falar? Dê o play no ChatBan!</h1>
+                   <h1 class="page__title">Qual empresa ou profissional deseja falar? <br>Dê o play no ChatBan!</h1>
 
-                   <form class="row gap-3 custom__map_form">
+                   <form class="row gap-4 custom__map_form">
                         <input id="map__input_address" class="col-12" type="text" value="" placeholder="Endereço, bairro, cidade" />
                         <input id="map__input_services" class="col-12" type="text" value="" placeholder="Profissional ou serviço" />
                         <input id="map__input_field" class="col-12" type="text" value="" placeholder="Área de atuação" />
-                        <?= ButtonLink("#", "Pesquisar", "submit"); ?>
+                        <div class="col-md-6">
+                            <?= ButtonLink("#", "Pesquisar", "submit"); ?>
+                        </div>
                    </form>
                 </div>
 
@@ -19,7 +20,6 @@
                     <?= GoogleMaps(); ?>
                 </div>
             </div>
-        </div>
     </div>
 </section>
 

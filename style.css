@@ -726,6 +726,8 @@ input[type="email"] {
   border-radius: 50px !important;
   color: var(--text_color_invert) !important;
   border: 2px solid white !important;
+  min-height: 60px !important;
+  padding-left: 24px !important;
 }
 
 textarea {
@@ -849,6 +851,10 @@ textarea:focus {
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-top: 8px solid #ffffff;
+}
+
+.custom__map_container {
+  padding: 20px;
 }
 
 /*MAP STYLES END*/
