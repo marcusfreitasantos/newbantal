@@ -19,12 +19,17 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
         let field = "";
         let typingTimer;
         const delayTimeout = 1000;
+        let allUsers = [];
+        let filteredUsers = [];
+        let AdvancedMarkerElement;
+        let PinElement;
+        let markersReference = [];
 
         function updateMapCenter(locationObj) {
-
             console.log(locationObj)
             if (map) {
                 map.setCenter({ lat: Number(locationObj.lat), lng: Number(locationObj.lng) });
+                 map.setZoom(14)
             }
         }
 
@@ -49,19 +54,97 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
         });
 
         async function getAllUsers() {
-        try {
-            const allUsers = await callAjaxGetUsers();
-            return allUsers;
-        } catch (error) {
-            console.error("Error fetching users:", error);
+            try {
+                const allUsersFromDatabase = await callAjaxGetUsers();
+                return allUsersFromDatabase;
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
         }
+
+        const buildContent = (userAvatar) => {
+            const bantalUsersAvatar = document.createElement("div");
+            bantalUsersAvatar.innerHTML = `
+            <div class='bantal__map_user_avatar_wrapper'>
+                <img src='${userAvatar}' />
+            </div>
+            `
+            return bantalUsersAvatar;
+        }
+
+        const filterUsersByInputField = () => {
+            
+            filteredUsers = allUsers.filter((item) => {
+                return (
+                    item.services &&
+                    item.latitude &&
+                    item.longitude &&
+                    (
+                        item.services.toLowerCase().includes(services.toLowerCase()) &&
+                        item.occupation_name.toLowerCase().includes(field.toLowerCase())
+                    )
+                );
+            });
+
+            console.log(filteredUsers)
+            if(!filteredUsers.length){
+                alert("Nada encontrado.")
+                return
+            }else if(filteredUsers.length > 1){
+                map.setZoom(5)
+            }else{
+                updateMapCenter({
+                    lat: filteredUsers[0].latitude,
+                    lng: filteredUsers[0].longitude
+                })
+            }
+
+            removeMarkers()
+        }
+
+        function removeMarkers() {
+            markersReference.map((marker) => {
+                marker.setMap(null)
+                filteredUsers.map((user) => {
+                    markersReference[user.user_id].setMap(map)
+                })
+            })           
+        }    
+
+        function addMarkersToCustomMap(){
+            filteredUsers.map((bantalUser) => {
+                if (bantalUser.latitude && bantalUser.longitude) {
+                    const avatarBase64Url = `data:image/png; base64, ${bantalUser.photo}`;
+
+                    const bantalUserMarker = new AdvancedMarkerElement({
+                        map,
+                        position: {
+                        lat: Number(bantalUser.latitude),
+                        lng: Number(bantalUser.longitude),
+                        },
+                        content: buildContent(bantalUser.photo && bantalUser.role !== "CANDIDATE" ? avatarBase64Url : "<?= $defaultUserAvatar; ?>")
+                    });
+
+                    bantalUserMarker.addListener("click", ({ domEvent, latLng }) => {
+                        console.log(bantalUser)
+                        // const { target } = domEvent;
+                        // window.location.href =
+                        // "https://recrutamento.bantal.com.br/recrutamento";
+                    });
+
+                    markersReference[bantalUser.user_id] = bantalUserMarker;
+                }
+            });
         }
 
         async function initMap() {
             const { Map } = await google.maps.importLibrary("maps");
-            const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
+            const googleMapsMarkerComponent = await google.maps.importLibrary(
                 "marker"
             );
+
+            AdvancedMarkerElement = googleMapsMarkerComponent.AdvancedMarkerElement
+            PinElement = googleMapsMarkerComponent.PinElement
 
             map = new Map(document.getElementById("bantal__custom_map"), {
                 center: { lat: currentUserLat, lng: currentUserLong },
@@ -83,38 +166,10 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                 zIndex: 5
             });
 
-            const allUsers = await getAllUsers();
+            allUsers = await getAllUsers();
+            filteredUsers = allUsers
 
-            const buildContent = (userAvatar) => {
-                const bantalUsersAvatar = document.createElement("div");
-                bantalUsersAvatar.innerHTML = `
-                <div class='bantal__map_user_avatar_wrapper'>
-                    <img src='${userAvatar}' />
-                </div>
-                `
-                return bantalUsersAvatar;
-            }
-
-            allUsers.map((bantalUser) => {
-                if (bantalUser.latitude && bantalUser.longitude) {
-                    const avatarBase64Url = `data:image/png; base64, ${bantalUser.photo}`;
-
-                    const bantalUserMarker = new AdvancedMarkerElement({
-                        map,
-                        position: {
-                        lat: Number(bantalUser.latitude),
-                        lng: Number(bantalUser.longitude),
-                        },
-                        content: buildContent(bantalUser.photo && bantalUser.role !== "CANDIDATE" ? avatarBase64Url : "<?= $defaultUserAvatar; ?>")
-                    });
-
-                    bantalUserMarker.addListener("click", ({ domEvent, latLng }) => {
-                        const { target } = domEvent;
-                        window.location.href =
-                        "https://recrutamento.bantal.com.br/recrutamento";
-                    });
-                }
-            });
+            addMarkersToCustomMap(AdvancedMarkerElement, PinElement)
 
             const btnSubmit = document.querySelector(".custom__map_form a");
             const customMapAddress = document.querySelector("#map__input_address");
@@ -133,7 +188,8 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                 const inputValue = e.currentTarget.value
                 clearTimeout(typingTimer)
                 typingTimer = setTimeout(function(){
-                    services = inputValue
+                    services = inputValue;
+                    filterUsersByInputField();
                 }, delayTimeout)
             })
 
@@ -141,13 +197,14 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                 const inputValue = e.currentTarget.value
                 clearTimeout(typingTimer)
                 typingTimer = setTimeout(function(){
-                    field = inputValue
+                    field = inputValue;
+                    filterUsersByInputField();
                 }, delayTimeout)
             })
             
             btnSubmit.addEventListener("click", function(e){
                 e.preventDefault()
-                updateMapCenter()
+               
             })
         }
     </script>

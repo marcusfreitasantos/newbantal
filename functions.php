@@ -60,10 +60,42 @@ function getAllPostCategories(){
 }
 
 
+function getOccupationsFromApi(){
+	$baseApiUrl = BANTAL_API_PUBLIC_URL;
+	$apiResponse = wp_remote_get("$baseApiUrl/obterAreaAtuacao", array("timeout" => 300));
+	
+	if (!is_wp_error( $apiResponse ) ) {
+        $occupationList = json_decode($apiResponse["body"]);
+
+		if(!empty($occupationList)){
+			return $occupationList;
+		}
+	 }else{
+		$errorMsg = $apiResponse->get_error_message();
+		$currentDate = date("Y-m-d H:i:s");
+		generateLogFiles("/bantal-api-logs/get-clients/get-occupation-list-log.txt", "Error in geting occupations from api. Error message: $errorMsg. $currentDate. \n");
+        return;
+	 }
+}
+
+
 function generateLogFiles($folderPath, $logMessage){
 	$uploadDir = wp_upload_dir();
 	$logFilePath = $uploadDir['basedir'] . $folderPath;
 	file_put_contents($logFilePath, $logMessage, FILE_APPEND);
+}
+
+function defineOccupationToBantalUser($user, $occupationList){
+	$userOccupation = "";
+
+	foreach($occupationList as $occupation){
+		if($occupation->idAreaAtuacao == $user->idAreaAtuacao){
+			$userOccupation = $occupation->nome; 
+		}
+	}
+
+	return $userOccupation;
+
 }
 
 
@@ -72,13 +104,12 @@ function getUsersFromApi(){
 	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 300));
 
 	 if (!is_wp_error( $apiResponse ) ) {
-		generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in geting clients from api. Error message: .... \n");
-
         $usersList = json_decode($apiResponse["body"]);
+		$occupationList = getOccupationsFromApi();
 
-		if(!empty($usersList)){
-			foreach($usersList as $company){
-				saveUsersFromApiInDatabase($company);
+		if(!empty($usersList) && !empty($occupationList)){
+			foreach($usersList as $user){
+				saveUsersFromApiInDatabase($user, defineOccupationToBantalUser($user, $occupationList));
 			}
 		}
 	 }else{
@@ -92,7 +123,7 @@ add_action("getUsersFromApiHook", "getUsersFromApi");
 
 
 
-function saveUsersFromApiInDatabase($client){
+function saveUsersFromApiInDatabase($client, $clientOccupation){
 	global $wpdb;
 
 	$tableName = $wpdb->prefix . 'bantal_users' ;
@@ -109,7 +140,9 @@ function saveUsersFromApiInDatabase($client){
 			'longitude' => $client->longitude,
 			'role' => $client->perfil,
 			'services' => $client->servicos,
-			'occupation_id' => $client->idAreaAtuacao
+			'occupation_id' => $client->idAreaAtuacao,
+			'occupation_name' => $clientOccupation,
+
 		);
 
 		$where = array(
@@ -118,7 +151,7 @@ function saveUsersFromApiInDatabase($client){
 
 		$whereFormat = array('%d');
 
-		$dataToUpdateFormat = array('%s', '%s', '%f', '%f', '%s', '%s', '%d');
+		$dataToUpdateFormat = array('%s', '%s', '%f', '%f', '%s', '%s', '%d', '%s');
 		
 		$wpdb->update($tableName, $dataToUpdate, $where, $dataToUpdateFormat, $whereFormat);
 
@@ -131,10 +164,11 @@ function saveUsersFromApiInDatabase($client){
 			'longitude' => $client->longitude,
 			'role' => $client->perfil,
 			'services' => $client->servicos,
-			'occupation_id' => $client->idAreaAtuacao
+			'occupation_id' => $client->idAreaAtuacao,
+			'occupation_name' => $clientOccupation,
 		);
 
-		$format = array('%d', '%s', '%s', '%f', '%f', '%s', '%s', '%d');
+		$format = array('%d', '%s', '%s', '%f', '%f', '%s', '%s', '%d', '%s');
 
 		$wpdb->insert($tableName, $data, $format);
 
