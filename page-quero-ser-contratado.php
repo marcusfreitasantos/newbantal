@@ -4,7 +4,7 @@
     <div class="custom__map_container">
             <div class="row">  
                 <div class="col-md-4 p-5">
-                   <h1 class="page__title">Qual empresa ou profissional deseja falar? <br>Dê o play no ChatBan!</h1>
+                   <h1 class="page__title">Qual empresa ou profissional deseja falar? Dê o play no ChatBan!</h1>
 
                    <form class="row gap-4 custom__map_form">
                         <input id="map__input_address" class="col-12" type="text" value="" placeholder="Endereço, bairro, cidade" />
