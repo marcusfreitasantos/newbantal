@@ -5,7 +5,7 @@
         <div class="contact__form_wrapper">
             <div class="row align-items-center">  
                 <div class="col-md-4 p-5">
-                   <h1 class="page__title_invert">Encontre a oportunidade que você precisa na Bantal</h1>
+                   <h1 class="page__title_invert">Qual empresa ou profissional deseja falar? Dê o play no ChatBan!</h1>
 
                    <form class="row gap-3 custom__map_form">
                         <input id="map__input_address" class="col-12" type="text" value="" placeholder="Endereço, bairro, cidade" />

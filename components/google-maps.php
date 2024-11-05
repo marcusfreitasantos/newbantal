@@ -145,9 +145,9 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
 
                     bantalUserMarker.addListener("click", ({ domEvent, latLng }) => {
                         console.log(bantalUser)
-                        // const { target } = domEvent;
-                        // window.location.href =
-                        // "https://recrutamento.bantal.com.br/recrutamento";
+                        const { target } = domEvent;
+                        window.location.href =
+                        "https://recrutamento.bantal.com.br/recrutamento";
                     });
 
                     markersReference[bantalUser.user_id] = bantalUserMarker;
