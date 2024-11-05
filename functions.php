@@ -139,7 +139,7 @@ function saveUsersFromApiInDatabase($client, $clientOccupation){
 			'latitude' => $client->latitude,
 			'longitude' => $client->longitude,
 			'role' => $client->perfil,
-			'services' => $client->servicos,
+			'services' => $client->servicos ? $client->servicos : "",
 			'occupation_id' => $client->idAreaAtuacao,
 			'occupation_name' => $clientOccupation,
 
@@ -163,7 +163,7 @@ function saveUsersFromApiInDatabase($client, $clientOccupation){
 			'latitude' => $client->latitude,
 			'longitude' => $client->longitude,
 			'role' => $client->perfil,
-			'services' => $client->servicos,
+			'services' => $client->servicos ? $client->servicos : "",
 			'occupation_id' => $client->idAreaAtuacao,
 			'occupation_name' => $clientOccupation,
 		);

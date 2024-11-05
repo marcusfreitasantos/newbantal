@@ -72,18 +72,36 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
             return bantalUsersAvatar;
         }
 
-        const filterUsersByInputField = () => {
-            
+        const filterUsersByInputField = () => {            
             filteredUsers = allUsers.filter((item) => {
-                return (
-                    item.services &&
-                    item.latitude &&
-                    item.longitude &&
-                    (
-                        item.services.toLowerCase().includes(services.toLowerCase()) &&
-                        item.occupation_name.toLowerCase().includes(field.toLowerCase())
-                    )
-                );
+                if(services !== "" && field !== ""){
+                    return (
+                        item.latitude &&
+                        item.longitude &&
+                        (
+                            item.services.toLowerCase().includes(services.toLowerCase()) &&
+                            item.occupation_name.toLowerCase().includes(field.toLowerCase())
+                        )
+                    );
+                }else if(services !== ""){
+                    return (
+                        item.latitude &&
+                        item.longitude &&
+                        (
+                            item.services.toLowerCase().includes(services.toLowerCase())
+                        )
+                    );
+                }else if(field !== ""){
+                    return (
+                        item.latitude &&
+                        item.longitude &&
+                        (
+                            item.occupation_name.toLowerCase().includes(field.toLowerCase())
+                        )
+                    );
+                }else{
+                    return false
+                }
             });
 
             console.log(filteredUsers)
