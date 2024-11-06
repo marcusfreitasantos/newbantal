@@ -10,7 +10,7 @@ $benefits = get_field("benefits_section");
 function heroBannerBgConfig($imgUrl){
     $heroBannerStyle = 
     "background-image:
-    linear-gradient(-145deg, rgba(245, 246, 252, 0), rgba(0, 0, 0, 0.8)),
+    linear-gradient(-145deg, rgba(245, 246, 252, 0), rgba(0, 0, 0, 0.3)),
     url('$imgUrl');
     border-radius: 15px; 
     overflow: hidden;";
