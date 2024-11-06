@@ -857,6 +857,40 @@ textarea:focus {
   padding: 20px;
 }
 
+.input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input__wrapper input[type="text"] {
+  padding-left: 40px !important;
+}
+
+.input__wrapper:before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  background-color: var(--warning_color);
+  position: absolute;
+  left: 30px;
+}
+
+.input__wrapper:after {
+  content: "";
+  background-color: var(--warning_color);
+  width: 1px;
+  height: 80px;
+  position: absolute;
+  left: 35px;
+  top: 30px;
+}
+
+.custom__map_form .input__wrapper:nth-of-type(3)::after {
+  display: none !important;
+}
+
 /*MAP STYLES END*/
 
 @media (max-width: 40rem) {

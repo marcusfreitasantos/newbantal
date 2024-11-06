@@ -157,6 +157,7 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
 
         async function initMap() {
             const { Map } = await google.maps.importLibrary("maps");
+            const {ColorScheme} = await google.maps.importLibrary("core")
             const googleMapsMarkerComponent = await google.maps.importLibrary(
                 "marker"
             );
@@ -168,6 +169,7 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                 center: { lat: currentUserLat, lng: currentUserLong },
                 zoom: 14,
                 mapId: "bantal__custom_map",
+                colorScheme: ColorScheme.DARK,
                 disableDefaultUI: true,
             });
 
