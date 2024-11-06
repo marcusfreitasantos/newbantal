@@ -317,13 +317,15 @@ footer .wpforms-container {
 
 .hero__content_title {
   color: white;
-  font-size: 4rem;
+  font-size: 5rem;
+  line-height: 5rem;
   font-weight: bold;
 }
 
 .hero__content_text {
   color: white;
-  font-size: 1.8rem;
+  font-size: 3rem;
+  line-height: 3.5rem;
   font-weight: 300;
 }
 
