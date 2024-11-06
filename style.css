@@ -505,6 +505,26 @@ footer .wpforms-container {
   margin: 24px 0;
 }
 
+.app__stores_btn_wrapper_row {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.app__stores_btn_wrapper_row img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.app__stores_btn_wrapper_col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-left: 12px;
+}
+
 .page__content {
   color: var(--text_color);
   padding: 60px 0;
@@ -890,7 +910,6 @@ textarea:focus {
 .custom__map_form .input__wrapper:nth-of-type(3)::after {
   display: none !important;
 }
-
 /*MAP STYLES END*/
 
 @media (max-width: 40rem) {
