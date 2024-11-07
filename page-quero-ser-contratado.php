@@ -24,6 +24,8 @@
                             <?= ButtonLink("#", "Localizar", "submit"); ?>
                         </div>
                    </form>
+
+                   <div class="filtered__users_wrapper"></div>
                 </div>
 
                 <div class="col-md-8">

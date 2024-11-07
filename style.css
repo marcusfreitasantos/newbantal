@@ -888,6 +888,7 @@ textarea:focus {
 
 .input__wrapper input[type="text"] {
   padding-left: 40px !important;
+  color: white !important;
 }
 
 .input__wrapper:before {
@@ -914,6 +915,73 @@ textarea:focus {
   display: none !important;
 }
 /*MAP STYLES END*/
+
+/*MAP USER LIST START*/
+.bantal__users_list {
+  margin-top: 40px;
+  border-top: 1px solid var(--secondary_color);
+}
+
+.bantal__users_list_title {
+  color: var(--warning_color);
+  padding: 40px 0 20px 0;
+}
+
+.bantal__users_list_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bantal__users_list_item_info_wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 50%;
+  margin-bottom: 6px;
+}
+
+.bantal__users_list_item_info_wrapper img {
+  width: 80px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.bantal__users_list_item_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bantal__users_list_item_info_name {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+}
+
+.bantal__users_list_item_info_details {
+  font-weight: 300;
+  font-size: 1.4rem;
+  color: white;
+  line-height: 2rem;
+}
+
+.bantal__users_list_item a {
+  text-decoration: none;
+  padding: 12px;
+  background-color: var(--primary_color_hover_light);
+  border-radius: 10px;
+}
+/*MAP USER LIST END*/
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
 
 @media (max-width: 40rem) {
   .header__logo_wrapper {

@@ -33,6 +33,38 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
             }
         }
 
+        const renderFilteredUsersList = () => {
+            const filteredUsersWrapper = document.querySelector(".filtered__users_wrapper");
+            const userListComponent = document.createElement("div");
+            filteredUsersWrapper.innerHTML = '';
+
+            filteredUsersWrapper.appendChild(userListComponent)
+            console.log(filteredUsers)
+
+            const userListItem = filteredUsers.map((user) => {
+                return `<div class='bantal__users_list_item'>
+                    <div class='bantal__users_list_item_info_wrapper'>
+                        <img src='<?= $defaultUserAvatar; ?>' alt='logo da empresa encontrada' />
+                        <div class='bantal__users_list_item_info'>
+                            <span class='bantal__users_list_item_info_name'>${user.display_name}</span>
+                            <span class='bantal__users_list_item_info_details'>${user.occupation_name}</span>
+                            <span class='bantal__users_list_item_info_details'>${user.services}</span>
+                        </div>
+                    </div>
+
+                    <div class=''>
+                        <a href='https://recrutamento.bantal.com.br/cadastro'>Ver detalhes</a>
+                    </div>                
+                </div>`
+            }).join('')
+            userListComponent.innerHTML = `
+            <div class='bantal__users_list'>
+                <h4 class='bantal__users_list_title'>Resultados da sua busca</h4>
+                ${userListItem}
+            </div>
+            `
+        }
+
         async function getCoordsByAddress(newAddress){
             const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${newAddress}&key=<?= $googleApiKey; ?>`
             try{
@@ -104,7 +136,6 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                 }
             });
 
-            console.log(filteredUsers)
             if(!filteredUsers.length){
                 alert("Nada encontrado.")
                 return
@@ -116,7 +147,6 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                     lng: filteredUsers[0].longitude
                 })
             }
-
             removeMarkers()
         }
 
@@ -210,6 +240,12 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                 typingTimer = setTimeout(function(){
                     services = inputValue;
                     filterUsersByInputField();
+
+                    if(inputValue !== ""){
+                        btnSubmit.classList.remove('disabled')
+                    }else{
+                        btnSubmit.classList.add('disabled')
+                    }
                 }, delayTimeout)
             })
 
@@ -219,12 +255,21 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                 typingTimer = setTimeout(function(){
                     field = inputValue;
                     filterUsersByInputField();
+
+                    if(inputValue !== ""){
+                        btnSubmit.classList.remove('disabled')
+                    }else{
+                        btnSubmit.classList.add('disabled')
+                    }
                 }, delayTimeout)
             })
+
+
+            btnSubmit.classList.add('disabled')
             
             btnSubmit.addEventListener("click", function(e){
                 e.preventDefault()
-               
+                renderFilteredUsersList()
             })
         }
     </script>
