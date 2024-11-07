@@ -937,7 +937,7 @@ textarea:focus {
   display: flex;
   gap: 12px;
   align-items: center;
-  width: 50%;
+  width: 80%;
   margin-bottom: 6px;
 }
 
@@ -960,7 +960,6 @@ textarea:focus {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 80%;
 }
 
 .bantal__users_list_item_info_details {
