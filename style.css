@@ -548,7 +548,8 @@ footer .wpforms-container {
 }
 
 /*BANTAL NOW BTN START*/
-.custom__header_nav_item .btn__bantal_now {
+.custom__header_nav_item .btn__bantal_now,
+.btn__bantal_now {
   animation: show_main_menu_animation 0.5s infinite;
   fill: var(--warning_color) !important;
 }
