@@ -4,7 +4,6 @@
     $companiesList = getAllCompaniesFromDatabase(15);
     ?>
     <section class="clients__carousel_section">
-        <div class="container">
             <h2 class="section__title">Empresas que estão anunciando na Bantal</h2>
             <div class="row">
                 <div class="clients__wrapper position-relative">
@@ -31,7 +30,6 @@
             <div class="button__link_wrapper mt-2 col-md-2">
                 <?= ButtonLink("$siteUrl/empresas", "Ver todas") ?>
             </div>
-        </div>
     </section>
 
     
@@ -50,7 +48,7 @@
                 },
                 breakpoints: {
                     1024: {
-                    slidesPerView: 8,
+                    slidesPerView: 10,
                     spaceBetween: 12,
                     },
                 },
