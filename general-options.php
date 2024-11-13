@@ -1,20 +1,20 @@
 <?php
 
-function whatsappBtnAdminMenu() {
+function generalOptionsMenu() {
     add_menu_page(
-        'Whatsapp Button Options', 
-        'Whatsapp Button',
+        'Theme general options', 
+        'General Options',
         'manage_options', 
-        'whatsapp-btn-options-page', 
-        'whatsappBtnOptionsPage',  
-        'dashicons-whatsapp', 
+        'theme-general-options-page', 
+        'generalOptionsPage',  
+        'dashicons-admin-settings', 
         100                       
     );
 }
-add_action('admin_menu', 'whatsappBtnAdminMenu');
+add_action('admin_menu', 'generalOptionsMenu');
 
 
-function whatsappBtnOptionsPage(){
+function generalOptionsPage(){
     if (!current_user_can('manage_options')) {
         wp_die('You do not have sufficient permissions to access this page.');
     }
@@ -25,12 +25,19 @@ function whatsappBtnOptionsPage(){
         echo '<div class="updated"><p>Options saved!</p></div>';
     }
 
+    if(isset($_POST['update_users'])){
+        do_action("getUsersFromApiHook");
+        echo '<div class="updated"><p>Users updated!</p></div>';
+    }
+
     $whatsappCustomBtnNumber = get_option('whatsapp_custom_btn_number', '');
     $whatsappCustomBtnMsg = get_option('whatsapp_custom_btn_msg', '');
 
     ?>
     <div class="wrap">
-        <h1>Whats App Button Options</h1>
+        <h1>Opções gerais do tema</h1>
+        
+        <h2>Configurar Whatsapp</h2>
         <form method="post" action="">
             <?php wp_nonce_field('whatsapp_custom_btn_number_nonce'); ?>
             <table class="form-table">
@@ -47,9 +54,16 @@ function whatsappBtnOptionsPage(){
             </table>
             <?php submit_button(); ?>
         </form>
+
+        <h2>Atualizar base de usuários</h2>
+        <form method="post">
+            <?php submit_button("Atualizar", "primary", "update_users"); ?>
+        </form>
     </div>
     <?php
 }
+
+
 
 function renderWhatsappButton(){
     $whatsappCustomBtnNumber = get_option('whatsapp_custom_btn_number', '');
@@ -90,5 +104,3 @@ function renderWhatsappButton(){
         </a>
     <?php }
 }
-
-add_action("wp_footer", "renderWhatsappButton");

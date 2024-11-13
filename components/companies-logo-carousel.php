@@ -1,7 +1,7 @@
 <?php function CompaniesLogoCarousel(){
     ob_start();
     $siteUrl = site_url();
-    $companiesList = getAllCompaniesFromDatabase(15);
+    $companiesList = getAllCompaniesFromDatabase(20);
     ?>
     <section class="clients__carousel_section">
             <h2 class="section__title">Empresas que estão anunciando na Bantal</h2>

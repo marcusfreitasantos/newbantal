@@ -38,13 +38,15 @@ add_action( 'wp_enqueue_scripts', 'oceanwp_child_enqueue_parent_style' );
 
 include("components/button-link.php");
 include("components/post-card.php");
-include("components/whatsapp-btn.php");
 include("components/post-pagination.php");
 include("components/companies-logo-carousel.php");
 include("components/login-form.php");
 include("components/bottom-cta.php");
 include("components/bantal-plan-card.php");
 include("components/google-maps.php");
+include("general-options.php");
+
+
 
 
 function getAllPostCategories(){
@@ -187,7 +189,7 @@ function getAllCompaniesFromDatabase($limit) {
 
     $tableName = $wpdb->prefix . 'bantal_users';
 
-    $query = $wpdb->prepare("SELECT * FROM $tableName WHERE role = 'EMPLOYER' LIMIT %d", $limit);
+    $query = $wpdb->prepare("SELECT * FROM $tableName WHERE role = 'EMPLOYER' AND photo IS NOT NULL ORDER BY date_creation DESC LIMIT %d", $limit);
 
     $companies = $wpdb->get_results($query);
 
