@@ -661,7 +661,10 @@ footer .wpforms-container {
 
 .bantal__plans_card_img_wrapper {
   width: 200px;
-  height: 80px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .bantal__plans_card_cta {
@@ -673,6 +676,7 @@ footer .wpforms-container {
 
 .bantal__plans_card img {
   width: 100%;
+  height: 80px;
 }
 
 .bantal__plans_price {
