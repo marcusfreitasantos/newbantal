@@ -31,14 +31,18 @@ function BantalPlanCard($planObj){
             </div>
 
             <div class="bantal__plans_card_resources">
-                <h4 class="bantal__plans_card_resources_title">Recursos</h4>
-
-                <?php foreach($resources as $resource){ ?>
-                    <div class="bantal__plans_card_resource_item">
-                        <i class="fa-solid fa-check"></i>
-                        <span><?= $resource['resource']; ?></span>
-                    </div>
-                <?php } ?> 
+                <div class="">
+                    <h4 class="bantal__plans_card_resources_title">Recursos</h4>
+                    
+                    <?php if(!empty($resources)){ ?>        
+                        <?php foreach($resources as $resource){ ?>
+                            <div class="bantal__plans_card_resource_item">
+                                <i class="fa-solid fa-check"></i>
+                                <span><?= $resource['resource']; ?></span>
+                            </div>
+                        <?php } ?>         
+                     <?php } ?>
+                </div>
 
                 <div class="bantal__plans_card_details_btn less__details">
                     <i class="fa-solid fa-chevron-up"></i>

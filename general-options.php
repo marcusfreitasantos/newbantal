@@ -15,6 +15,9 @@ add_action('admin_menu', 'generalOptionsMenu');
 
 
 function generalOptionsPage(){
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
     if (!current_user_can('manage_options')) {
         wp_die('You do not have sufficient permissions to access this page.');
     }
@@ -26,8 +29,15 @@ function generalOptionsPage(){
     }
 
     if(isset($_POST['update_users'])){
-        do_action("getUsersFromApiHook");
-        echo '<div class="updated"><p>Users updated!</p></div>';
+        $apiResponse = getUsersFromApi();
+
+        if($apiResponse === "Users updated!"){
+            echo "<div class='updated'><p>$apiResponse</p></div>";
+        }else{
+            print_r($apiResponse);
+            echo '<div class="error"><p>Users not updated!</p></div>'; 
+        }
+
     }
 
     $whatsappCustomBtnNumber = get_option('whatsapp_custom_btn_number', '');

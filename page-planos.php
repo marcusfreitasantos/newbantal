@@ -87,11 +87,14 @@ $bannerBg = get_field("banner_background");
     const moreDetailsBtn = [...document.querySelectorAll(".more__details")];
     const lessDetails = [...document.querySelectorAll(".less__details")];
     const planResources = [...document.querySelectorAll(".bantal__plans_card_resources")];
+    const planCards = [...document.querySelectorAll(".bantal__plans_card")];
     
     moreDetailsBtn.map((openBtn, index) => {
         openBtn.addEventListener("click", (e) => {
             openBtn.style.display = "none";
             planResources[index].classList.add("show-resources")
+            planCards[index].style.height = "100%";
+
         })
     })
 
@@ -100,6 +103,8 @@ $bannerBg = get_field("banner_background");
         closeBtn.addEventListener("click", (e) => {
             moreDetailsBtn[index].style.display = "flex";
             planResources[index].classList.remove("show-resources")
+            planCards[index].style.height = "auto";
+
         })
     })
 

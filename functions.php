@@ -8,7 +8,7 @@ $emailHeaders = array(
 
 function oceanwp_child_enqueue_parent_style() {
 
-	$version = "1.0.4";
+	$version = "1.0.5";
 
 	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( 'oceanwp-style' ), $version );
 	wp_enqueue_style( 'bootstrap-style', get_stylesheet_directory_uri() . '/assets/libs/bootstrap/css/bootstrap.min.css',array(), $version );
@@ -62,22 +62,41 @@ function getAllPostCategories(){
 }
 
 
-function getOccupationsFromApi(){
+function getOccupationsFromApi() {
 	$baseApiUrl = BANTAL_API_PUBLIC_URL;
-	$apiResponse = wp_remote_get("$baseApiUrl/obterAreaAtuacao", array("timeout" => 300));
-	
-	if (!is_wp_error( $apiResponse ) ) {
-        $occupationList = json_decode($apiResponse["body"]);
+	$apiUrl = "$baseApiUrl/obterAreaAtuacao";
+	$ch = curl_init($apiUrl);
 
-		if(!empty($occupationList)){
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	$response = curl_exec($ch);
+
+	if (curl_errno($ch)) {
+		$errorMsg = curl_error($ch);
+		curl_close($ch);
+
+		$currentDate = date("Y-m-d H:i:s");
+		// generateLogFiles("/bantal-api-logs/get-clients/get-occupation-list-log.txt", "Error in getting occupations from API. Error message: $errorMsg. $currentDate. \n");
+		return;
+	}
+
+	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	curl_close($ch);
+
+	if ($httpCode === 200) {
+		$occupationList = json_decode($response);
+
+		if (!empty($occupationList)) {
 			return $occupationList;
 		}
-	 }else{
-		$errorMsg = $apiResponse->get_error_message();
+	} else {
 		$currentDate = date("Y-m-d H:i:s");
-		generateLogFiles("/bantal-api-logs/get-clients/get-occupation-list-log.txt", "Error in geting occupations from api. Error message: $errorMsg. $currentDate. \n");
-        return;
-	 }
+		$errorMsg = "HTTP Error $httpCode";
+		// generateLogFiles("/bantal-api-logs/get-clients/get-occupation-list-log.txt", "Error in getting occupations from API. HTTP Code: $httpCode. $currentDate. \n");
+		return;
+	}
 }
 
 
@@ -101,25 +120,42 @@ function defineOccupationToBantalUser($user, $occupationList){
 }
 
 
-function getUsersFromApi(){
+function getUsersFromApi() {
 	$baseApiUrl = BANTAL_API_PUBLIC_URL;
-	$apiResponse = wp_remote_get("$baseApiUrl/lista-usuarios", array("timeout" => 300));
+	$apiUrl = "$baseApiUrl/lista-usuarios";
+	$ch = curl_init($apiUrl);
 
-	 if (!is_wp_error( $apiResponse ) ) {
-        $usersList = json_decode($apiResponse["body"]);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	$response = curl_exec($ch);
+
+	if (curl_errno($ch)) {
+		$error_message = curl_error($ch);
+		curl_close($ch);
+		return new WP_Error('broke', __($error_message, "my_textdomain"));
+	}
+
+	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	curl_close($ch);
+
+	if ($httpCode === 200) {
+		$usersList = json_decode($response);
 		$occupationList = getOccupationsFromApi();
 
-		if(!empty($usersList) && !empty($occupationList)){
-			foreach($usersList as $user){
+		if (!empty($usersList) && !empty($occupationList)) {
+			foreach ($usersList as $user) {
 				saveUsersFromApiInDatabase($user, defineOccupationToBantalUser($user, $occupationList));
 			}
+			return "Users updated!";
 		}
-	 }else{
-		$errorMsg = $apiResponse->get_error_message();
+	} else {
 		$currentDate = date("Y-m-d H:i:s");
-		generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in geting clients from api. Error message: $errorMsg. $currentDate. \n");
-        return;
-	 }
+		$errorMsg = "HTTP Error $httpCode";
+		//generateLogFiles("/bantal-api-logs/get-clients/get-clients-log.txt", "Error in getting clients from API. Error message: $errorMsg. $currentDate. \n");
+		return new WP_Error('broke', __("Error in getting clients from API. HTTP Code: $httpCode", "my_textdomain"));
+	}
 }
 add_action("getUsersFromApiHook", "getUsersFromApi");
 
@@ -178,7 +214,7 @@ function saveUsersFromApiInDatabase($client, $clientOccupation){
 	
 		if (!$insert_id) {
 			$currentDate = date("Y-m-d H:i:s");
-			generateLogFiles("/bantal-api-logs/database-operations/insert-data-log.txt", "Failed to insert data for $client->displayName. $currentDate. \n");
+			//generateLogFiles("/bantal-api-logs/database-operations/insert-data-log.txt", "Failed to insert data for $client->displayName. $currentDate. \n");
 		} 
 	}
 }
