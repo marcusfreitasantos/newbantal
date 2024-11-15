@@ -9,7 +9,7 @@
             <?php foreach($companiesList as $company){
                 if($company->photo){ ?>
                     <div class="col-md-2 mb-5">
-                        <a class="clients__card" href=<?= "https://recrutamento.bantal.com.br/empresa-vagas/lista-vagas-por-empresa/$company->user_id"; ?> target="_blank">
+                        <a class="clients__card" href=<?= "https://recrutamento.bantal.com.br/empresas/lista-vagas/$company->user_id"; ?> target="_blank">
                             <img src="data:image/png; base64, <?= $company->photo; ?>" />
                         </a>
                     </div>
