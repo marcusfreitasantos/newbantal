@@ -13,7 +13,7 @@
                             <?php foreach($companiesList as $company){
                                 if($company->photo){ ?>
             
-                                    <a class="clients__card swiper-slide" href=<?= "https://recrutamento.bantal.com.br/empresa-vagas/lista-vagas-por-empresa/$company->user_id"; ?> target="_blank">
+                                    <a class="clients__card swiper-slide" href=<?= "https://recrutamento.bantal.com.br/empresas/lista-vagas/$company->user_id"; ?> target="_blank">
                                         <img src="data:image/png; base64, <?= $company->photo; ?>" />
                                     </a>
             
