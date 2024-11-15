@@ -1,4 +1,4 @@
-function callAjaxGetUsers() {
+function callAjaxGetUsers(targetUserRole) {
   console.log("calling ajax...");
   return new Promise((resolve, reject) => {
     jQuery.ajax({
@@ -6,9 +6,12 @@ function callAjaxGetUsers() {
       type: "POST",
       data: {
         action: "get_bantal_users_by_ajax",
+        userRole: targetUserRole,
       },
       success: function (response) {
         console.log("ajax call succeeded");
+        console.log(targetUserRole);
+        console.log(response);
         resolve(response.data);
       },
       error: function (error) {

@@ -4,7 +4,12 @@ function GoogleMaps(){ ?>
 $googleApiKey = GOOGLE_MAPS_API_KEY; 
 $childThemeDirectory = get_stylesheet_directory_uri();
 $defaultUserAvatar = "$childThemeDirectory/assets/img/favicon.png";
-$geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%20Sussex%20Drive%20Ottawa%20ON&key=$googleApiKey"
+
+// Get the queried object and sanitize it
+$current_page = sanitize_post( $GLOBALS['wp_the_query']->get_queried_object() );
+// Get the page slug
+$slug = $current_page->post_name;
+$currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
 ?>
 
     <!-- prettier-ignore -->
@@ -53,7 +58,7 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                     </div>
 
                     <div class=''>
-                        <a href='https://recrutamento.bantal.com.br/cadastro'>Ver detalhes</a>
+                        <a href='https://recrutamento.bantal.com.br/empresas/lista-vagas/${user.user_id}' target='_blank'>Ver detalhes</a>
                     </div>                
                 </div>`
             }).join('')
@@ -87,7 +92,7 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
 
         async function getAllUsers() {
             try {
-                const allUsersFromDatabase = await callAjaxGetUsers();
+                const allUsersFromDatabase = await callAjaxGetUsers('<?= $currentTargetUser; ?>');
                 return allUsersFromDatabase;
             } catch (error) {
                 console.error("Error fetching users:", error);
@@ -176,8 +181,13 @@ $geocodeBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=24%
                     bantalUserMarker.addListener("click", ({ domEvent, latLng }) => {
                         console.log(bantalUser)
                         const { target } = domEvent;
-                        window.location.href =
-                        "https://recrutamento.bantal.com.br/recrutamento";
+
+                        if(bantalUser.role === "EMPLOYER"){
+                            window.open(`https://recrutamento.bantal.com.br/empresas/lista-vagas/${bantalUser.user_id}`);
+                        }else{
+                            window.open('https://recrutamento.bantal.com.br/cadastro');
+                        }
+                        
                     });
 
                     markersReference[bantalUser.user_id] = bantalUserMarker;

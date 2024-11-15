@@ -238,10 +238,15 @@ function getAllCompaniesFromDatabase($limit) {
 
 function getAllBantalUsersFromDatabase() {
     global $wpdb;
-
+	
+	$targetUserRole = isset($_POST['userRole']) ? $_POST['userRole'] : null;
 	$tableName = $wpdb->prefix . 'bantal_users';
 
-	$query = $wpdb->prepare("SELECT * FROM $tableName LIMIT %d", 500);
+	if($targetUserRole){
+		$query = $wpdb->prepare("SELECT * FROM $tableName WHERE role = '$targetUserRole' LIMIT %d", 500);
+	}else{
+		$query = $wpdb->prepare("SELECT * FROM $tableName LIMIT %d", 500);
+	}
 
     $allBantalUsers = $wpdb->get_results($query);
 
