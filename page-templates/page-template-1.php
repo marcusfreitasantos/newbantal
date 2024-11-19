@@ -6,6 +6,7 @@
 $siteUrl = site_url();
 $hero = get_field("banner");
 $benefits = get_field("benefits_section"); 
+$headerCTA = get_field("header_cta");
 
 function heroBannerBgConfig($imgUrl){
     $heroBannerStyle = 
@@ -26,14 +27,22 @@ $agoraNaBantalIcon = "<svg aria-hidden='true' class='btn__bantal_now' xmlns='htt
 <section class="free__warning_section">
     <div class="row align-items-center">
         <div class="col-md-10 mb-3">
-            <h2 class="free__warning_title">Você está na Bantal gratuita</h2>
-            <p class="free__warning_text">Assine o Bantal Premium e mergulhe em um universo de possibilidades!</p>
+            <?php if($headerCTA["title"]){ ?>
+                <h2 class="free__warning_title"><?= $headerCTA["title"]; ?></h2>
+            <?php } ?>
+
+            <?php if($headerCTA["subtitle"]){ ?>
+                <p class="free__warning_text"><?= $headerCTA["subtitle"]; ?></p>
+            <?php } ?>
         </div>
 
         <div class="col-md-2 d-flex justify-content-end">
+
+        <?php if($headerCTA["button"]){ ?>
             <div class="d-block w-100 btn__bantal_sign_now">
-                <?= ButtonLink("$siteUrl/planos", "Assine já", "attention") ?>
+                <?= ButtonLink($headerCTA["button"]["url"], $headerCTA["button"]["title"], "attention") ?>
             </div>
+        <?php } ?>
         </div>
     </div>  
 </section>
