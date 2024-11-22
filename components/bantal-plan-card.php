@@ -20,7 +20,7 @@ function BantalPlanCard($planObj){
                 <span class="bantal__plans_period"><?= $splits; ?></span>
             </div>
             
-            <div class="bantal__plans_card_cta">
+            <div class="bantal__plans_card_cta w-50">
                 <?= ButtonLink($paymentUrl, 'Escolher', 'secondary', 'blank'); ?>
                 <span class="bantal__plans_legal_txt"><?= $legalText; ?></span>
             </div>

@@ -57,7 +57,7 @@ $bannerBg = get_field("banner_background");
                     $getCurrentPlans->the_post();
                     global $post;
                     if(has_term("mensal", "plan_category", $post->id)){ ?>
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-3 mb-3">
                             <?= BantalPlanCard($post); ?>
                         </div> 
                     <?php }
@@ -72,7 +72,7 @@ $bannerBg = get_field("banner_background");
                     $getCurrentPlans->the_post();
                     global $post;
                     if(has_term("anual", "plan_category", $post->id)){ ?>
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <?= BantalPlanCard($post); ?>
                         </div> 
                     <?php }
