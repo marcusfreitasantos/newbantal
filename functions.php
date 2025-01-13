@@ -120,9 +120,9 @@ function defineOccupationToBantalUser($user, $occupationList){
 }
 
 
-function getUsersFromApi() {
+function getUsersFromApi($page) {
 	$baseApiUrl = BANTAL_API_PUBLIC_URL;
-	$apiUrl = "$baseApiUrl/lista-usuarios";
+	$apiUrl = "$baseApiUrl/lista-usuarios?page=$page&size=50&sort=displayName%2Casc";
 	$ch = curl_init($apiUrl);
 
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -141,14 +141,15 @@ function getUsersFromApi() {
 	curl_close($ch);
 
 	if ($httpCode === 200) {
-		$usersList = json_decode($response);
+		$response = json_decode($response);
+		$usersList = $response->content;
 		$occupationList = getOccupationsFromApi();
 
 		if (!empty($usersList) && !empty($occupationList)) {
 			foreach ($usersList as $user) {
 				saveUsersFromApiInDatabase($user, defineOccupationToBantalUser($user, $occupationList));
 			}
-			return "Users updated!";
+			return $usersList;
 		}
 	} else {
 		$currentDate = date("Y-m-d H:i:s");
@@ -158,6 +159,25 @@ function getUsersFromApi() {
 	}
 }
 add_action("getUsersFromApiHook", "getUsersFromApi");
+
+
+
+function getUsersBatch(){
+	$page = 1;
+	$users = getUsersFromApi($page);
+
+	while($users && !empty($users)){
+		$page++;
+		$users = getUsersFromApi($page);
+
+		if(is_wp_error($users)){
+			return 'Users not updated.';
+		}
+	}
+
+	return 'Users updated!';
+}
+add_action("getUsersFromApiHook", "getUsersBatch");
 
 
 

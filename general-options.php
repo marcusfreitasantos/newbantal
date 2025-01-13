@@ -18,6 +18,10 @@ function generalOptionsPage(){
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
+    $baseApiUrl = BANTAL_API_PUBLIC_URL;
+	$apiUrl = "$baseApiUrl/lista-usuarios?page=1&size=50&sort=displayName%2Casc";
+
+    echo $apiUrl;
     if (!current_user_can('manage_options')) {
         wp_die('You do not have sufficient permissions to access this page.');
     }
@@ -29,7 +33,7 @@ function generalOptionsPage(){
     }
 
     if(isset($_POST['update_users'])){
-        $apiResponse = getUsersFromApi();
+        $apiResponse = getUsersBatch();
 
         if($apiResponse === "Users updated!"){
             echo "<div class='updated'><p>$apiResponse</p></div>";
