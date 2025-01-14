@@ -31,7 +31,6 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
         let markersReference = [];
 
         function updateMapCenter(locationObj) {
-            console.log(locationObj)
             if (map) {
                 map.setCenter({ lat: Number(locationObj.lat), lng: Number(locationObj.lng) });
                  map.setZoom(14)
