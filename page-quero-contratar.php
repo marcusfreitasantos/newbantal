@@ -29,6 +29,7 @@
                 </div>
 
                 <div class="col-md-8">
+                    <?= LoadSpinner(); ?>
                     <?= GoogleMaps(); ?>
                 </div>
             </div>

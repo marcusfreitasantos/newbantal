@@ -983,6 +983,7 @@ textarea:focus {
   background-color: var(--primary_color_hover_light);
   border-radius: 10px;
 }
+
 /*MAP USER LIST END*/
 
 .disabled {

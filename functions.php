@@ -45,6 +45,7 @@ include("components/bottom-cta.php");
 include("components/bantal-plan-card.php");
 include("components/google-maps.php");
 include("general-options.php");
+include("components/load-spinner.php");
 
 
 

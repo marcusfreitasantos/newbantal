@@ -57,9 +57,12 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                         </div>
                     </div>
 
-                    <div class=''>
-                        <a href='https://recrutamento.bantal.com.br/empresas/lista-vagas/${user.user_id}' target='_blank'>Ver detalhes</a>
-                    </div>                
+                    ${
+                        user.role === "EMPLOYER" ? 
+                        `<div class=''>
+                            <a href='https://recrutamento.bantal.com.br/empresas/lista-vagas/${user.user_id}' target='_blank'>Ver detalhes</a>
+                        </div>` : ''
+                    }
                 </div>`
             }).join('')
             userListComponent.innerHTML = `
@@ -91,11 +94,17 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
         });
 
         async function getAllUsers() {
+            const loadSpinner = document.querySelector(".loading__spinner_wrapper");
+            const mapWrapper = document.querySelector("#bantal__custom_map");
+
             try {
                 const allUsersFromDatabase = await callAjaxGetUsers('<?= $currentTargetUser; ?>');
                 return allUsersFromDatabase;
             } catch (error) {
                 console.error("Error fetching users:", error);
+            }finally{
+                loadSpinner.classList.add("d-none");
+                mapWrapper.classList.remove("d-none");
             }
         }
 
@@ -284,5 +293,5 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
         }
     </script>
 
-    <div id="bantal__custom_map" style="height: 85vh"></div>
+    <div id="bantal__custom_map" class="d-none" style="height: 85vh"></div>
 <?php }
