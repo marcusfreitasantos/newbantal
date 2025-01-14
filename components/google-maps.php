@@ -257,9 +257,9 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                 clearTimeout(typingTimer)
                 typingTimer = setTimeout(function(){
                     services = inputValue;
-                    filterUsersByInputField();
-
+                    
                     if(inputValue !== ""){
+                        filterUsersByInputField();
                         btnSubmit.classList.remove('disabled')
                     }else{
                         btnSubmit.classList.add('disabled')
@@ -272,9 +272,9 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                 clearTimeout(typingTimer)
                 typingTimer = setTimeout(function(){
                     field = inputValue;
-                    filterUsersByInputField();
-
+                    
                     if(inputValue !== ""){
+                        filterUsersByInputField();
                         btnSubmit.classList.remove('disabled')
                     }else{
                         btnSubmit.classList.add('disabled')
