@@ -33,21 +33,16 @@ function oceanwp_child_enqueue_parent_style() {
 add_action( 'wp_enqueue_scripts', 'oceanwp_child_enqueue_parent_style' );
 
 
-
-
-
-include("components/button-link.php");
-include("components/post-card.php");
-include("components/post-pagination.php");
-include("components/companies-logo-carousel.php");
-include("components/login-form.php");
-include("components/bottom-cta.php");
-include("components/bantal-plan-card.php");
-include("components/google-maps.php");
-include("general-options.php");
-include("components/load-spinner.php");
-
-
+include_once("components/button-link.php");
+include_once("components/post-card.php");
+include_once("components/post-pagination.php");
+include_once("components/companies-logo-carousel.php");
+include_once("components/login-form.php");
+include_once("components/bottom-cta.php");
+include_once("components/bantal-plan-card.php");
+include_once("components/google-maps.php");
+include_once("general-options.php");
+include_once("components/load-spinner.php");
 
 
 function getAllPostCategories(){
@@ -246,7 +241,14 @@ function getAllCompaniesFromDatabase($limit) {
 
     $tableName = $wpdb->prefix . 'bantal_users';
 
-    $query = $wpdb->prepare("SELECT * FROM $tableName WHERE role = 'EMPLOYER' AND photo IS NOT NULL ORDER BY date_creation DESC LIMIT %d", $limit);
+	$query = $wpdb->prepare(
+		"SELECT * FROM $tableName 
+		WHERE role = %s AND user_id != %d AND photo IS NOT NULL 
+		ORDER BY date_creation DESC LIMIT %d",
+		'EMPLOYER',
+		339,
+		$limit
+	);
 
     $companies = $wpdb->get_results($query);
 
@@ -264,9 +266,22 @@ function getAllBantalUsersFromDatabase() {
 	$tableName = $wpdb->prefix . 'bantal_users';
 
 	if($targetUserRole){
-		$query = $wpdb->prepare("SELECT * FROM $tableName WHERE role = '$targetUserRole' LIMIT %d", 500);
+		$query = $wpdb->prepare(
+			"SELECT * FROM $tableName 
+			WHERE role = %s AND user_id != %d 
+			LIMIT %d",
+			$targetUserRole,
+			339,
+			500
+		);
 	}else{
-		$query = $wpdb->prepare("SELECT * FROM $tableName LIMIT %d", 500);
+		$query = $wpdb->prepare(
+			"SELECT * FROM $tableName 
+			WHERE user_id != %d 
+			LIMIT %d",
+			339,
+			500
+		);
 	}
 
     $allBantalUsers = $wpdb->get_results($query);

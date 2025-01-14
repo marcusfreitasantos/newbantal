@@ -945,12 +945,12 @@ textarea:focus {
   display: flex;
   gap: 12px;
   align-items: center;
-  width: 80%;
+  width: 75%;
   margin-bottom: 6px;
 }
 
 .bantal__users_list_item_info_wrapper img {
-  width: 80px;
+  width: 60px;
   background-color: white;
   border-radius: 10px;
   padding: 5px;
@@ -972,7 +972,7 @@ textarea:focus {
 
 .bantal__users_list_item_info_details {
   font-weight: 300;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: white;
   line-height: 2rem;
 }

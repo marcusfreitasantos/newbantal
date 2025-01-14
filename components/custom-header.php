@@ -31,10 +31,8 @@ function defineNavItemIconName($navItem){
 <header class="custom__header">
     <div class="custom__header_container">
         <div class="row justify-content-between align-items-center">
-
-
-            <div class="col-8">
-                <div class="custom__header_nav_wrapper d-flex align-items-center w-100 gap-5">
+            <div class="col-md-10">
+                <div class="custom__header_nav_wrapper d-flex align-items-center w-100 gap-4">
                     <a href=<?php echo $siteUrl; ?> class="header__logo_wrapper">
                         <img class="img-fluid" width="160px" src=<?php echo $logo; ?>  alt="bantal logo" />
                     </a>
@@ -50,7 +48,7 @@ function defineNavItemIconName($navItem){
                 </div>
             </div>
 
-            <div class="col-4 d-sm-none d-flex justify-content-end custom__header_mobile_btn">
+            <div class="col-md-2 d-sm-none d-flex justify-content-end custom__header_mobile_btn">
                 <div class="header__left_menu">
                     <span class="header__main_menu_btn">
                         <i class="fa-solid fa-bars"></i>
@@ -62,7 +60,7 @@ function defineNavItemIconName($navItem){
                 </div>
             </div>
 
-            <div class="col-md-4  d-none d-md-block justify-content-end">
+            <div class="col-md-2  d-none d-md-block justify-content-end">
                 <div class="d-flex align-items-center justify-content-end header__right_menu">
                     
                     <div class="header__search_form">
