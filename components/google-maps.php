@@ -262,6 +262,7 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                 clearTimeout(typingTimer)
                 typingTimer = setTimeout(function(){
                     getCoordsByAddress(encodeURIComponent(inputValue))
+                    renderFilteredUsersList()
                 }, delayTimeout)
             })
 
@@ -274,6 +275,7 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                     if(inputValue !== ""){
                         filterUsersByInputField();
                         btnSubmit.classList.remove('disabled')
+                        renderFilteredUsersList()
                     }else{
                         btnSubmit.classList.add('disabled')
                     }
@@ -289,6 +291,7 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                     if(inputValue !== ""){
                         filterUsersByInputField();
                         btnSubmit.classList.remove('disabled')
+                        renderFilteredUsersList()
                     }else{
                         btnSubmit.classList.add('disabled')
                     }
