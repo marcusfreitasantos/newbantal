@@ -45,7 +45,7 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
             filteredUsersWrapper.appendChild(userListComponent)
             console.log(filteredUsers)
 
-            const userListItem = filteredUsers.map((user) => {
+            const userListItem = filteredUsers?.map((user) => {
                 return `<div class='bantal__users_list_item'>
                     <div class='bantal__users_list_item_info_wrapper'>
                         <img src='<?= $defaultUserAvatar; ?>' alt='logo da empresa encontrada' />
@@ -97,7 +97,7 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
             const mapWrapper = document.querySelector("#bantal__custom_map");
 
             try {
-                const allUsersFromDatabase = await callAjaxGetUsers('<?= $currentTargetUser; ?>');
+                const allUsersFromDatabase = await callAjaxGetUsers('<?= $currentTargetUser; ?>', currentUserLat, currentUserLong);
                 return allUsersFromDatabase;
             } catch (error) {
                 console.error("Error fetching users:", error);
@@ -116,6 +116,15 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
             `
             return bantalUsersAvatar;
         }
+    
+        const updateMarkersOnMap = () => {
+            markersReference.map((marker) => {
+                marker.setMap(null)
+                filteredUsers?.map((user) => {
+                    markersReference[user.user_id].setMap(map)
+                })
+            })           
+        }    
 
         const filterUsersByInputField = () => {            
             filteredUsers = allUsers.filter((item) => {
@@ -160,20 +169,12 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                     lng: filteredUsers[0].longitude
                 })
             }
-            removeMarkers()
+            updateMarkersOnMap()
         }
 
-        function removeMarkers() {
-            markersReference.map((marker) => {
-                marker.setMap(null)
-                filteredUsers.map((user) => {
-                    markersReference[user.user_id].setMap(map)
-                })
-            })           
-        }    
-
+  
         function addMarkersToCustomMap(){
-            filteredUsers.map((bantalUser) => {
+            filteredUsers?.map((bantalUser) => {
                 if (bantalUser.latitude && bantalUser.longitude) {
                     const avatarBase64Url = `data:image/png; base64, ${bantalUser.photo}`;
 
@@ -187,7 +188,6 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                     });
 
                     bantalUserMarker.addListener("click", ({ domEvent, latLng }) => {
-                        console.log(bantalUser)
                         const { target } = domEvent;
 
                         if(bantalUser.role === "EMPLOYER"){
@@ -201,6 +201,19 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                     markersReference[bantalUser.user_id] = bantalUserMarker;
                 }
             });
+        }
+
+
+        const renderMarkersByDraggingMap = async(lat, long) => {
+            try{
+                newFilteredUsers = await callAjaxGetUsers('<?= $currentTargetUser; ?>', lat, long);
+                if(newFilteredUsers.length){
+                    filteredUsers = newFilteredUsers
+                    addMarkersToCustomMap()
+                }
+            }catch(e){
+                console.log(e)
+            }
         }
 
         async function initMap() {
@@ -237,7 +250,7 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
             allUsers = await getAllUsers();
             filteredUsers = allUsers
 
-            addMarkersToCustomMap(AdvancedMarkerElement, PinElement)
+            addMarkersToCustomMap()
 
             const btnSubmit = document.querySelector(".custom__map_form a");
             const customMapAddress = document.querySelector("#map__input_address");
@@ -289,7 +302,18 @@ $currentTargetUser = $slug == "quero-ser-contratado" ? "EMPLOYER" : null;
                 e.preventDefault()
                 renderFilteredUsersList()
             })
+
+            map.addListener("dragend", () => {
+                setTimeout(() => {
+                    const zoom = map.getZoom();
+                    const center = map.getCenter();
+                    console.log("bounds_changed")
+                    renderMarkersByDraggingMap(center.lat(), center.lng())
+                }, 2000)
+            });
         }
+
+
     </script>
 
     <div id="bantal__custom_map" class="d-none" style="height: 85vh"></div>

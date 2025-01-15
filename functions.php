@@ -19,6 +19,7 @@ function oceanwp_child_enqueue_parent_style() {
 	wp_enqueue_style( 'swiper-style', get_stylesheet_directory_uri() . '/assets/libs/swiper/css/swiper-bundle.min.css',array(), $version );
    	wp_enqueue_style( 'lightbox-style', get_stylesheet_directory_uri() . '/assets/libs/lightbox/css/lightbox.min.css',array(), $version );
 
+	wp_enqueue_script( 'jquery-script', get_stylesheet_directory_uri() . '/assets/libs/jquery/jquery.js', array(), $version );
 	wp_enqueue_script( 'bootstrap-main-script', get_stylesheet_directory_uri() . '/assets/libs/bootstrap/js/bootstrap.min.js', array(), $version );
 	wp_enqueue_script( 'bootstrap-bundle-script', get_stylesheet_directory_uri() . '/assets/libs/bootstrap/js/bootstrap.bundle.min.js', array(), $version );
 	wp_enqueue_script( 'swiper-script',get_stylesheet_directory_uri() . '/assets/libs/swiper/js/swiper-bundle.min.js', array(), $version );
@@ -261,26 +262,46 @@ function getAllCompaniesFromDatabase($limit) {
 
 function getAllBantalUsersFromDatabase() {
     global $wpdb;
-	
+	$radius = 10;
 	$targetUserRole = isset($_POST['userRole']) ? $_POST['userRole'] : null;
+	$latitude = isset($_POST['userLat']) ? floatval($_POST['userLat']) : null;
+	$longitude = isset($_POST['userLong']) ? floatval($_POST['userLong']) : null;
 	$tableName = $wpdb->prefix . 'bantal_users';
 
 	if($targetUserRole){
 		$query = $wpdb->prepare(
-			"SELECT * FROM $tableName 
-			WHERE role = %s AND user_id != %d 
-			LIMIT %d",
-			$targetUserRole,
-			339,
-			500
+			"SELECT *, 
+				(6371 * acos(
+					cos(radians(%f)) * 
+					cos(radians(latitude)) * 
+					cos(radians(longitude) - radians(%f)) + 
+					sin(radians(%f)) * 
+					sin(radians(latitude))
+				)) AS distance
+			 FROM $tableName 
+			 WHERE user_id != %d
+			 AND role = %s
+			 HAVING distance <= %d
+			 ORDER BY distance ASC
+			 LIMIT %d",
+			$latitude, $longitude, $latitude, 339, $targetUserRole, $radius, 100
 		);
 	}else{
 		$query = $wpdb->prepare(
-			"SELECT * FROM $tableName 
-			WHERE user_id != %d 
-			LIMIT %d",
-			339,
-			500
+			"SELECT *, 
+				(6371 * acos(
+					cos(radians(%f)) * 
+					cos(radians(latitude)) * 
+					cos(radians(longitude) - radians(%f)) + 
+					sin(radians(%f)) * 
+					sin(radians(latitude))
+				)) AS distance
+			 FROM $tableName 
+			 WHERE user_id != %d
+			 HAVING distance <= %d
+			 ORDER BY distance ASC
+			 LIMIT %d",
+			$latitude, $longitude, $latitude, 339, $radius, 100
 		);
 	}
 
