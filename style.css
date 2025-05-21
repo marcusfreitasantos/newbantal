@@ -928,6 +928,8 @@ textarea:focus {
 .bantal__users_list {
   margin-top: 40px;
   border-top: 1px solid var(--secondary_color);
+  max-height: 300px;
+  overflow-y: scroll;
 }
 
 .bantal__users_list_title {
